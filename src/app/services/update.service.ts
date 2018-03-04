@@ -1,0 +1,49 @@
+import { Injectable } from '@angular/core';
+
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireStorage } from 'angularfire2/storage';
+
+import { UserService } from './user.service';
+import { NotificationService } from './notification.service';
+
+@Injectable()
+export class UpdateService {
+    constructor(
+        private _database: AngularFireDatabase,
+        private _storage: AngularFireStorage,
+        private _userService: UserService,
+        private _notificationService: NotificationService
+    ) {}
+
+    public updateUserProfile(updateObj) {
+        const userId = this._userService.getUserId();
+        const userRef = this._database.object(`users/${userId}`);
+        userRef.update(updateObj)
+            .then(() => {
+                const notification = 'Uspesno ste promenili svoj profil';
+                this._notificationService.displayNotification(notification);
+            })
+            .catch(err => console.log(err));
+    }
+
+    public updateUserImage(file) {
+        const userId = this._userService.getUserId();
+        const filePath = `images/${userId}`;
+        const imageRef = this._storage.upload(filePath, file)
+            .then(() => {
+                const notification = 'Slika je uspesno promenjena';
+                this._notificationService.displayNotification(notification);
+            })
+            .catch(err => console.log(err));
+    }
+
+    public updateUserDaysOff(userId, newDaysOff) {
+        this._database.object(`users/${userId}`).update({daysOff: newDaysOff})
+            .then(() => {
+                const notification = 'Korisniku je promenjen broj slobodnih dana';
+                this._notificationService.displayNotification(notification);
+            }).catch(err => {
+                this._notificationService.displayError('Greska', err.code);
+            });
+    }
+}

@@ -1,0 +1,71 @@
+<div class="container">
+  <div>
+    <div class="row">
+      <blockquote class="col s4 offset-s4" >Pocetak</blockquote>
+    </div>
+    <div class="row">
+      <div class="col s3">
+        <label>Izaberite dan</label>
+        <select class="browser-default" [(ngModel)]="startDate.day" >
+          <option value="" disabled selected>Choose your option</option>
+          <option *ngFor="let day of days" [value]="day"> {{day}} </option>
+        </select>
+      </div>
+      <p class="col s1"></p>
+      <div class="col s3">
+        <label >Mesec</label>
+        <select class="browser-default" [(ngModel)]="startDate.month" >
+          <option value="" disabled selected>Choose your option</option>
+          <option *ngFor="let month of months" [value]="month"> {{month}} </option>
+        </select>
+      </div>
+      <p class="col s1"></p>
+      <div class="col s3">
+        <label>Godina</label>
+        <select class="browser-default" [(ngModel)]="startDate.year" >
+          <option value="" disabled selected>Choose your option</option>
+          <option [value]="2018"> 2018 </option>
+          <option [value]="2019"> 2019 </option>
+          <option [value]="2020"> 2020 </option>
+        </select>    
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <blockquote class="col s4 offset-s4">Kraj</blockquote>
+    </div>
+    <div class="row">
+      <div class="col s3">
+        <label >Dan</label>
+        <select class="browser-default" [(ngModel)]="endDate.day" >
+          <option value="" disabled selected>Choose your option</option>
+          <option *ngFor="let day of days" [value]="day"> {{day}} </option>
+        </select>    </div>
+      <p class="col s1"></p>
+      <div class="col s3">
+        <label >Mesec</label>
+        <select class="browser-default" [(ngModel)]="endDate.month" >
+          <option value="" disabled selected>Choose your option</option>
+          <option *ngFor="let month of months" [value]="month"> {{month}} </option>
+        </select>    
+      </div>
+      <p class="col s1"></p>
+      <div class="col s3">
+        <label>Godina</label>
+        <select class="browser-default" [(ngModel)]="endDate.year" >
+          <option value="" disabled selected>Choose your option</option>
+          <option [value]="2018"> 2018 </option>
+          <option [value]="2019"> 2019 </option>
+          <option [value]="2020"> 2020 </option>
+        </select> 
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s9 offset-s3">
+      <button type="submit" class=" waves-effect waves-light btn" (click)="sendRequest('vacation')">Posalji odmor </button>
+      <button type="submit" class=" waves-effect waves-light btn" (click)="sendRequest('sickDays')" >Posalji bolovanje </button>
+    </div>
+  </div>
+</div>

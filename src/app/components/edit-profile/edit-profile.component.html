@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col s12" *ngIf="userIsLoggedIn" >
+    <div class="row">
+      <div class="col s6">
+        <div class="row">
+          <div class="col s8">
+            <div class="input-field">
+              <label for="address">Adresa</label>
+              <input type="text" class="validate" name="address" placeholder=" "
+              [(ngModel)]="address">
+            </div>
+          </div>
+          <div class="col s4">
+            <a class="waves-effect waves-light btn-floating btn-small" (click)="changeAddress()" ><i class="material-icons">check</i></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s8">
+            <div class="input-field">
+              <label for="email">Email</label>
+              <input type="email" class="validate" name="email" placeholder=" "
+              [(ngModel)]="email">
+            </div>
+          </div>
+          <div class="col s4">
+            <a class="waves-effect waves-light btn-floating btn-small" (click)="changeEmail()" ><i class="material-icons">check</i></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s8">
+            <div class="input-field">
+              <label for="phoneNumber">Broj telefona</label>
+              <input type="text" name="phoneNumber" placeholder=" "
+              [(ngModel)]="number">
+            </div>
+          </div>
+          <div class="col s4">
+            <a class="waves-effect waves-light btn-floating btn-small" (click)="changeNumber()" ><i class="material-icons">check</i></a>
+          </div> 
+        </div>
+        <div class="row">
+          <div class="col s8">
+            <div class="input-field">
+              <label for="position">Pozicija</label>
+              <input type="text" name="position" placeholder=" "
+              [(ngModel)]="position">
+            </div>
+          </div>
+          <div class="col s4">
+            <a class="waves-effect waves-light btn-floating btn-small" (click)="changePosition()" ><i class="material-icons">check</i></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s8">
+            <div class="input-field">
+              <label for="password">Sifra</label>
+              <input type="password" name="sifra" placeholder=" "
+              [(ngModel)]="password">
+            </div>
+          </div>
+          <div class="col s4">
+            <a class="waves-effect waves-light btn-floating btn-small" (click)="changePassword()" ><i class="material-icons">check</i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col s6">
+        <div class="row">
+          <img [src]="imageUrl">
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file" (change)="getFile($event)" >
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+              <a class="waves-effect waves-light btn-floating btn-small" (click)="changeProfilePicture()" ><i class="material-icons">check</i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

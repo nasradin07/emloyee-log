@@ -1,0 +1,63 @@
+  <div class="row">
+    <form class="col s12" (ngSubmit)="registerUser()" #userForm="ngForm" >
+      <div class="row">
+        <div class="col s4">
+          <div class="input-filed">
+            <label for="name">Ime: </label>
+            <input type="text" class="validate" id="name" name="name"
+            [(ngModel)]="userObj.name" required>
+          </div>
+          <div class="input-field">
+            <label for="lastname">Prezime</label>
+            <input type="text" class="validate" id="lastname" name="lastname"
+            [(ngModel)]="userObj.lastname" required >
+          </div>
+          <div class="input-field">
+            <label for="address">Adresa</label>
+            <input type="text" class="validate" id="address" name="address"
+            [(ngModel)]="userObj.address" required>
+          </div>
+          <div class="input-field">
+            <label for="email">Email</label>
+            <input type="email" class="validate" id="email" name="email"
+            [(ngModel)]="userObj.email" required>
+          </div>
+        </div>
+        <div class="col s4">
+            <img [src]="url">
+            <div class="file-field input-field">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file" (change)="getFile($event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" required>
+                </div>
+              </div>
+        </div>
+        <div class="col s4">
+          <div class="input-field">
+            <label for="phoneNumber">Broj telefona</label>
+            <input type="text" id="phoneNumber" name="phoneNumber"
+            [(ngModel)]="userObj.number" required>
+          </div>
+          <div class="input-field">
+            <label for="jbmg">JMBG</label>
+            <input type="text" id="jmbg" name="jmbg" name="jmbg" 
+             [(ngModel)]="userObj.jmbg" required>
+          </div>
+          <div class="input-field">
+              <label for="position">Pozicija</label>
+              <input type="text" id="position" name="position" 
+               [(ngModel)]="userObj.position" required>
+            </div>
+          <div class="input-field">
+            <label for="password">Sifra</label>
+            <input type="password" id="sifra" name="sifra"
+             [(ngModel)]="userObj.password" requred>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="waves-effect waves-light btn" [disabled]="!userForm.form.valid">Posalji profil</button>
+    </form>
+</div>

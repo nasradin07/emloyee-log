@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="input-field">
+      <label for="currentProject">Trenutni projekat</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.currentProject" name="currentProject" required></textarea>
+    </div>
+    <div class="input-field">
+      <label for="currentProject">Sta vam se nije svidelo u predhodnoj nedelji</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.dislike" name="dislike" requred></textarea>
+    </div>
+    <div class="input-field">
+      <label for="currentProject">Šta se moze unaprediti</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.imporve" name="imporve"></textarea>
+    </div>
+    <div class="input-field">
+      <label for="currentProject">Čime ste zadovoljni</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.like" name="like"></textarea>
+    </div>
+    <div class="input-field">
+        <label for="currentProject">Kako ocenjujete komunikaciju u timu</label>
+        <textarea class="materialize-textarea" [(ngModel)]="reportObj.communication" name="communication"></textarea>
+      </div>
+    <div class="input-field">
+      <label for="currentProject">Kako ocenjujete rad u kompaniji</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.assessment" name="assessment"></textarea>
+    </div>
+    <button class="waves-effect waves-light btn" (click)="sendReport()" >Posalji izvestaj</button>
+</div>

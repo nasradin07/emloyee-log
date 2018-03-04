@@ -1,0 +1,13 @@
+img {
+    padding: 5%;
+    height: 35vh;
+    width: 25vw;
+}
+
+.ng-invalid.required, .ng-invalid[required] {
+    border-left: 2px solid red;
+}
+
+.ng-invalid.required, .ng-valid[required] {
+    border-left: 2px solid rgb(63, 168, 63);
+}
