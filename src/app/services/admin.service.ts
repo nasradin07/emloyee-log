@@ -42,7 +42,7 @@ export class AdminService {
         this._requestService.getRequests().subscribe(
             requestsObj => {
                 if (requestsObj === null) {
-                    return;
+                    return [];
                 }
                 const requests = [];
                 Object.keys(requestsObj).forEach(key => {

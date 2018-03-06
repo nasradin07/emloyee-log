@@ -19,11 +19,14 @@ export class CreateProfileComponent implements OnInit {
     password: null,
     daysOff: 25
   };
+  test;
   url: any = '../../../assets/img/emptyprofile.png';
   file: File;
   constructor(
     private _registrationService: RegistrationService
   ) { }
+
+  push(param) {console.log(param); }
 
   ngOnInit() {
   }

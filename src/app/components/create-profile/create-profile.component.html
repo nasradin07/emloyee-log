@@ -50,7 +50,11 @@
               <label for="position">Pozicija</label>
               <input type="text" id="position" name="position" 
                [(ngModel)]="userObj.position" required>
-            </div>
+          </div>
+          <div class="">
+            <input type="checkbox" id="pos" name="pos" 
+             (click)="push('poz')" required>
+        </div>
           <div class="input-field">
             <label for="password">Sifra</label>
             <input type="password" id="sifra" name="sifra"
@@ -61,3 +65,4 @@
       <button type="submit" class="waves-effect waves-light btn" [disabled]="!userForm.form.valid">Posalji profil</button>
     </form>
 </div>
+
