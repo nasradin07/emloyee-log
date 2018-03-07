@@ -24,10 +24,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private _userService: UserService
   ) { }
 
-  obrisi() {
-    console.log('Brisem');
-  }
-
   ngOnInit() {
     this._subscribeToUserLoginEvent();
     this._subscribeToNotificationsFetchEvent();
