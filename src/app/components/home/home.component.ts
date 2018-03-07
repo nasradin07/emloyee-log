@@ -20,19 +20,22 @@ export class HomeComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    this._subscribeToFetchReportEvent();
+    this._subscribeToFetchReportsEvent();
     this.getReports();
 }
 
-  private _subscribeToFetchReportEvent() {
+  private _subscribeToFetchReportsEvent() {
     this._subscriptions.push(
-      this._reportService.reportFetchEvent$.subscribe(
+      this._reportService.reportsFetchEvent$.subscribe(
         reports => {
           this.reports = reports;
-          console.log(reports);
         }
       )
     );
+  }
+
+  public openReport(report) {
+    this._reportService.saveReportForReportViewer(report);
   }
 
   public getUserId() {
@@ -46,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._subscriptions.forEach( subscription => subscription.unsubscribe());
   }
+
 
 
 }

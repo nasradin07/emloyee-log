@@ -11,6 +11,7 @@ import { UserService } from '../services/user.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   userLoggedIn: any = false;
+  isUserAdmin = false;
   private _subscriptions: Subscription[] = [];
   constructor(
     private _loginService: LoginService,
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._subscribeToUserLoginEvent();
+    this._subscribeToUserDataFetchEvent();
     this._userService.listenUserStateChange();
   }
 
@@ -30,6 +32,38 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       )
     );
+  }
+
+  private _subscribeToUserDataFetchEvent() {
+    this._subscriptions.push(
+      this._userService.userDataFetchEvent$.subscribe(
+        notification => {
+          if (notification === true) {
+            this.getUserPosition();
+          }
+        }
+      )
+    );
+  }
+
+  public getUserPosition() {
+    const positions = this._userService.getUserPosition();
+    const isUserAdmin = positions.findIndex(position => {
+      return position.trim() === 'admin';
+    });
+    if (isUserAdmin !== -1) {
+      this.showAdminPage();
+    } else {
+      this.hideAdminPage();
+    }
+  }
+
+  public showAdminPage() {
+    this.isUserAdmin = true;
+  }
+
+  public hideAdminPage() {
+    this.isUserAdmin = false;
   }
 
   logout() {

@@ -3,7 +3,7 @@
     <div class="col s4 report" *ngFor="let report of reports">
       <h4>Izveštaj</h4>
       <p>Od <span>{{report.date}}</span></p>
-      <button class="waves-effec waves-light btn">Pogledaj izvestaj</button>
+      <button class="waves-effec waves-light btn" routerLink='/vidi-izvestaj' (click)="openReport(report)" >Pogledaj izvestaj</button>
     </div>
   </div>
 </div>

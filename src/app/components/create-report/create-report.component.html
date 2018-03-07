@@ -1,27 +1,33 @@
 <div class="container">
     <div class="input-field">
       <label for="currentProject">Trenutni projekat</label>
-      <textarea class="materialize-textarea" [(ngModel)]="reportObj.currentProject" name="currentProject" required></textarea>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.currentProject" name="currentProject" (blur)="validateCurrentProject()" ></textarea>
+      <div *ngIf="!isCurrentProjectValid" class="error" > Ovo polje mora biti popunjeno </div>
     </div>
     <div class="input-field">
-      <label for="currentProject">Sta vam se nije svidelo u predhodnoj nedelji</label>
-      <textarea class="materialize-textarea" [(ngModel)]="reportObj.dislike" name="dislike" requred></textarea>
+      <label for="dislike">Sta vam se nije svidelo u predhodnoj nedelji</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.dislike" name="dislike" (blur)="validateDislike()" ></textarea>
+      <div *ngIf="!isDislikeValid" class="error"> Ovo polje mora biti popunjeno </div>
     </div>
     <div class="input-field">
-      <label for="currentProject">Šta se moze unaprediti</label>
-      <textarea class="materialize-textarea" [(ngModel)]="reportObj.imporve" name="imporve"></textarea>
+      <label for="improve">Šta se moze unaprediti</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.imporve" name="imporve" (blur)="validateImprove()" ></textarea>
+      <div *ngIf="!isImproveValid" class="error" > Ovo polje mora biti popunjeno </div>
     </div>
     <div class="input-field">
-      <label for="currentProject">Čime ste zadovoljni</label>
-      <textarea class="materialize-textarea" [(ngModel)]="reportObj.like" name="like"></textarea>
+      <label for="like">Čime ste zadovoljni</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.like" name="like" (blur)="validateLike()" ></textarea>
+      <div *ngIf="!isLikeValid" class="error" > Ovo polje mora biti popunjeno </div>
     </div>
     <div class="input-field">
-        <label for="currentProject">Kako ocenjujete komunikaciju u timu</label>
-        <textarea class="materialize-textarea" [(ngModel)]="reportObj.communication" name="communication"></textarea>
+        <label for="communication">Kako ocenjujete komunikaciju u timu</label>
+        <textarea class="materialize-textarea" [(ngModel)]="reportObj.communication" name="communication" (blur)="validateCommunication()" ></textarea>
+        <div *ngIf="!isCommunicationValid" class="error" > Ovo polje mora biti popunjeno </div>
       </div>
     <div class="input-field">
-      <label for="currentProject">Kako ocenjujete rad u kompaniji</label>
-      <textarea class="materialize-textarea" [(ngModel)]="reportObj.assessment" name="assessment"></textarea>
+      <label for="assessment">Kako ocenjujete rad u kompaniji</label>
+      <textarea class="materialize-textarea" [(ngModel)]="reportObj.assessment" name="assessment" (blur)="validateAssessment()" ></textarea>
+      <div *ngIf="!isAssessmentValid" class="error" > Ovo polje mora biti popunjeno </div>
     </div>
     <button class="waves-effect waves-light btn" (click)="sendReport()" >Posalji izvestaj</button>
 </div>

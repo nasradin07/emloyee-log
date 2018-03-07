@@ -49,7 +49,8 @@ export class VacationComponent implements OnInit {
       }
       this._requestService.sendVacationRequest(startDate, endDate, totalVacationInDays);
     } else if (param === 'sickDays') {
-      this._requestService.sendSickDaysRequest(startDate, endDate);
+      const totalSickDays = this._validateService.getTotalSickDays(new Date(startDate), new Date(endDate));
+      this._requestService.sendSickDaysRequest(startDate, endDate, totalSickDays);
     }
   }
 

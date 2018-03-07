@@ -1,0 +1,9 @@
+<a class='dropdown-button btn-floating' data-activates='dropdown1' [ngClass]="buttonClasses" (click)="toggleButtonClass(false)" >
+  <i class="material-icons">alarm_on</i>
+</a>
+<ul id='dropdown1' class='dropdown-content'>
+    <li class="list-item" *ngFor="let notification of notifications" >
+      <div class="notification">{{notification.notification.requestStatus}}</div>
+      <div><a class="btn-flat notification-delete-button" (click)="deleteNotification(notification.notificationKey)" >Obrisi</a> </div>
+    </li>
+  </ul>

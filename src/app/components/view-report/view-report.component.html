@@ -1,0 +1,17 @@
+<div class="container report" *ngIf="report" >
+  <div class="row">
+    <div class="col s12 report-header">
+      <h4> {{report.currentProject}} </h4>
+      <blockquote> {{report.date}} </blockquote>
+    </div>
+    <div class="col s12 report-body">
+      <p> {{report.assessment}} </p>
+      <p> {{report.communication}} </p>
+      <p> {{report.like}} </p>
+      <p>{{report.dislike}}</p>
+      <p>{{report.imporove}}</p>
+      <cite>{{report.name}}</cite>
+    </div>
+    
+  </div>
+</div>

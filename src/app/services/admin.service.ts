@@ -6,6 +6,7 @@ import { RequestService } from './request.service';
 import { NotificationFirebaseService } from './notification-firebase.service';
 import { UserService } from './user.service';
 import { UpdateService } from './update.service';
+import { NotificationService } from './notification.service';
 
 @Injectable()
 
@@ -23,14 +24,25 @@ export class AdminService {
         private _reportService: ReportService,
         private _requestService: RequestService,
         private _updateService: UpdateService,
-        private _notificationFirebaseService: NotificationFirebaseService
+        private _notificationFirebaseService: NotificationFirebaseService,
+        private _notificationService: NotificationService
     ) {}
 
-    public approveVacationRequest(userId, notification, requestKey, totalVacationInDays) {
-        const userDaysOffRemaining = this._userService.getUserDaysOff() - totalVacationInDays;
+    public approveVacationRequest(userId, notification, requestKey, daysOffRemaining) {
         this._requestService.deleteRequest(requestKey);
         this._notificationFirebaseService.sendNotification(userId, notification);
-        this._updateService.updateUserDaysOff(userId, userDaysOffRemaining);
+        this._updateService.updateUserDaysOff(userId, daysOffRemaining);
+    }
+
+    public approveSickDaysRequest(userId, notification, requestKey, newSickDays) {
+        this._requestService.deleteRequest(requestKey);
+        this._updateService.updateUserSickDays(userId, newSickDays);
+        this._notificationFirebaseService.sendNotification(userId, notification);
+    }
+
+    public approveRegistrationRequest(userId, notification, requestKey) {
+        this._requestService.deleteRequest(requestKey);
+        this._notificationFirebaseService.sendNotification(userId, notification);
     }
 
     public diapproveRequest(userId, notification, requestKey) {
@@ -52,13 +64,18 @@ export class AdminService {
                 });
                 this.sendRequests(requests);
             },
-            err => console.log(err)
+            err => {
+                const notification = 'Greska';
+                const error = err.code;
+                this._notificationService.displayError(notification, error);
+            }
         );
     }
 
     public getReports() {
         this._reportService.getAllReports().subscribe(
             users => {
+                this._reports = [];
                 users.forEach(allUsersReportsObj => {
                     const allReports = Object.values(allUsersReportsObj);
                     allReports.forEach(report => {
@@ -67,7 +84,11 @@ export class AdminService {
                 });
                 this.sendReports(this._reports);
             },
-            err => console.log(err)
+            err => {
+                const notification = 'Greska';
+                const error = err.code;
+                this._notificationService.displayError(notification, error);
+            }
         );
     }
 

@@ -6,6 +6,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 
 import { UserService } from './user.service';
 import { NotificationService } from './notification.service';
+import { RequestService } from './request.service';
 
 @Injectable()
 export class RegistrationService {
@@ -14,7 +15,8 @@ export class RegistrationService {
     private _database: AngularFireDatabase,
     private _storage: AngularFireStorage,
     private _userService: UserService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _requestService: RequestService
   ) { }
 
   public registerUser(userObj, file) {
@@ -28,7 +30,10 @@ export class RegistrationService {
         Promise.all([userRef.set(userObj), userImageRef.put(file)])
           .then(() => {
             const notification = 'Uspesno ste se registrovali';
+            const userName = userObj.name;
+            const userLastname = userObj.lastname;
             this._notificationService.displayNotification(notification);
+            this._requestService.sendRegistrationRequest(userName, userLastname, userId, email);
           })
           .catch(err => {
             const notification = 'Doslo je do greske';

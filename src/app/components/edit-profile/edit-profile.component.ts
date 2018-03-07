@@ -43,8 +43,8 @@ export class EditProfileComponent implements OnInit {
 }
 
   changePassword() {
-    const updateObj = { password: this.password };
-    this.updateUserProfile(updateObj);
+    const newPassword = this.password;
+    this._updateService.updateUserPassword(newPassword);
   }
 
   changeNumber() {

@@ -15,6 +15,34 @@ export class RequestService {
         private _userService: UserService
     ) {}
 
+    public sendRequest(request) {
+        this._database.list('requests').push(request)
+            .then(() => {
+                const notification = 'Uspesno ste poslali zahtev';
+                this._notificationService.displayNotification(notification);
+            });
+    }
+
+    public sendRegistrationRequest(userName, userLastname, userId, userEmail) {
+        const data = {
+            dateOfRequest: (new Date).toDateString(),
+            request: `Zahtev za registraciju od ${userName} ${userLastname}`,
+            status: 'Nije odobren',
+            username: `${userName} ${userLastname}`
+        };
+        const metadata = {
+            userId : userId,
+            userEmail: userEmail,
+            type: 'Registracija'
+        };
+        const request = {
+            data: data,
+            metadata: metadata
+        };
+
+        this.sendRequest(request);
+    }
+
     public deleteRequest(requestKey) {
         this._database.object(`requests/${requestKey}`).remove()
             .then(() => {
@@ -30,6 +58,7 @@ export class RequestService {
         const userId = this._userService.getUserId();
         const date = (new Date()).toDateString();
         const type = 'Odmor';
+        const daysOffRemaining = this._userService.getUserDaysOff() - totalVacationInDays;
 
         const request = {
             metadata: {
@@ -37,7 +66,7 @@ export class RequestService {
                 startDate: startDate,
                 endDate: endDate,
                 type: type,
-                totalVacationInDays: totalVacationInDays
+                daysOffRemaining: daysOffRemaining
             },
             data: {
                 dateOfRequest: date,
@@ -47,26 +76,23 @@ export class RequestService {
             }
         };
 
-        const requestRef = this._database.list('requests');
-        requestRef.push(request)
-            .then((datasentback) => {
-                const notification = 'Uspesno ste poslali zahtev';
-                this._notificationService.displayNotification(notification);
-            });
+        this.sendRequest(request);
     }
 
-    public sendSickDaysRequest(startDate, endDate) {
+    public sendSickDaysRequest(startDate, endDate, totalSickDays) {
         const userName = this._userService.getUserName();
         const userId = this._userService.getUserId();
         const date = (new Date()).toDateString();
         const type = 'Bolovanje';
+        const newSickDays = this._userService.getUserSickDays() + totalSickDays;
 
         const request = {
             metadata: {
                 userId: userId,
                 startDate: startDate,
                 endDate: endDate,
-                type: type
+                type: type,
+                newSickDays: newSickDays
             },
             data: {
                 dateOfRequest: date,
@@ -76,9 +102,7 @@ export class RequestService {
             }
         };
 
-        const requestRef = this._database.list('requests');
-        requestRef.push(request)
-            .then(() => this._notificationService.displayNotification('Uspesno ste poslali zahtev'));
+        this.sendRequest(request);
     }
 
     public getRequests() {

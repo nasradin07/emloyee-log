@@ -13,6 +13,9 @@ export class UserService {
     private _userData: any = null;
     private _userLoggedInSubject = new Subject();
     public userLoggedInEvent$ = this._userLoggedInSubject.asObservable();
+
+    private _userDataSubject = new Subject();
+    public userDataFetchEvent$ = this._userDataSubject.asObservable();
     constructor(
         private _auth: AngularFireAuth,
         private _database: AngularFireDatabase,
@@ -25,15 +28,14 @@ export class UserService {
 
     public listenUserStateChange() {
         this._auth.auth.onAuthStateChanged( user => {
-            console.log('user state changed');
             if (user) {
                 this._user = user;
                 this._getUserData();
-                this._sendNotification(true);
+                this._notifyOfUserStateChange(true);
             } else {
                 this._user = null;
                 this._userData = null;
-                this._sendNotification(false);
+                this._notifyOfUserStateChange(false);
             }
         });
     }
@@ -54,6 +56,7 @@ export class UserService {
         this._database.object(`users/${userId}`).valueChanges()
             .subscribe( userData => {
                 this._userData = userData;
+                this._notifyOfUserDataFetchEvent(true);
             });
     }
 
@@ -63,12 +66,14 @@ export class UserService {
 
     public getUserId() {
         if (this._user !== null) {
-        return this._user.uid;
+            return this._user.uid;
         } else {
             return false;
         }
     }
-
+    public getUserSickDays() {
+        return this._userData.sickDays;
+    }
     public getUserName() {
         return `${this._userData.name} ${this._userData.lastname}`;
     }
@@ -77,7 +82,15 @@ export class UserService {
         return this._userData.daysOff;
     }
 
-    private _sendNotification(param) {
+    public getUserPosition() {
+        return this._userData.position;
+    }
+
+    private _notifyOfUserStateChange(param) {
         this._userLoggedInSubject.next(param);
+    }
+
+    private _notifyOfUserDataFetchEvent(param) {
+        this._userDataSubject.next(param);
     }
 }

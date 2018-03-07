@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireStorage } from 'angularfire2/storage';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 import { UserService } from './user.service';
 import { NotificationService } from './notification.service';
@@ -11,9 +12,20 @@ export class UpdateService {
     constructor(
         private _database: AngularFireDatabase,
         private _storage: AngularFireStorage,
+        private _auth: AngularFireAuth,
         private _userService: UserService,
         private _notificationService: NotificationService
     ) {}
+
+    public updateUserPassword(newPassword) {
+        const user = this._auth.auth.currentUser;
+        user.updatePassword(newPassword)
+            .then(() => {
+                const updateObj = { password: newPassword};
+                this.updateUserProfile(updateObj);
+            })
+            .catch(err => console.log(err));
+    }
 
     public updateUserProfile(updateObj) {
         const userId = this._userService.getUserId();
@@ -44,6 +56,14 @@ export class UpdateService {
                 this._notificationService.displayNotification(notification);
             }).catch(err => {
                 this._notificationService.displayError('Greska', err.code);
+            });
+    }
+
+    public updateUserSickDays(userId, newSickDays) {
+        this._database.object(`users/${userId}`).update({sickDays: newSickDays})
+            .then(() => {
+                const notification = 'Korisniku je promenjen broj dana provedenih na bolovanju';
+                this._notificationService.displayNotification(notification);
             });
     }
 }

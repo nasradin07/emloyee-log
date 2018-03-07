@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { AdminService } from '../../services/admin.service';
 import { NotificationService } from '../../services/notification.service';
+import { ReportService } from '../../services/report.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,7 +16,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   reports;
   constructor(
     private _adminService: AdminService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _reportService: ReportService
   ) { }
 
   ngOnInit() {
@@ -42,6 +44,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this._adminService.requestsFetchEvent$.subscribe(
         requests => {
           this.requests = requests;
+          console.log(requests);
         },
         err => console.log(err)
       )
@@ -77,12 +80,19 @@ export class AdminComponent implements OnInit, OnDestroy {
       requestStatus: `Zahtev: ${request.data.request} - je odobren`
     };
     const userId = request.metadata.userId;
-    const totalVacationInDays = request.metadata.totalVacationInDays;
-    this._adminService.approveVacationRequest(userId, notification, requestKey, totalVacationInDays);
+    if (request.metadata.type === 'Odmor') {
+      const daysOffRemaining = request.metadata.daysOffRemaining;
+      this._adminService.approveVacationRequest(userId, notification, requestKey, daysOffRemaining);
+    } else if (request.metadata.type === 'Registracija') {
+      this._adminService.approveRegistrationRequest(userId, notification, requestKey);
+    } else if (request.metadata.type === 'Bolovanje') {
+      const newSickDays = request.metadata.newSickDays;
+       this._adminService.approveSickDaysRequest(userId, notification, requestKey, newSickDays);
+    }
   }
 
   public openReport(report) {
-    console.log('Open', report);
+    this._reportService.saveReportForReportViewer(report);
   }
 
   ngOnDestroy() {

@@ -19,7 +19,11 @@ export class LoginService {
         const notification = 'Uspesno ste se ulogovali';
         this._notificationService.displayNotification(notification);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        const notification = 'Greska';
+        const error = err.code;
+        this._notificationService.displayError(notification, error);
+      });
   }
 
   public logout() {

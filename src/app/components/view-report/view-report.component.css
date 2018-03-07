@@ -1,0 +1,11 @@
+.report {
+    border: 1px solid black;
+    box-shadow: 3px 3px black;
+    margin-top: 5vh;
+    padding: 2vh 2vw;
+    margin: 2vh 2vw;
+    background: rgb(228, 228, 228);
+}
+p {
+    background: whitesmoke;
+}

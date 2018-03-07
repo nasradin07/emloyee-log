@@ -4,23 +4,27 @@
         <div class="col s4">
           <div class="input-filed">
             <label for="name">Ime: </label>
-            <input type="text" class="validate" id="name" name="name"
-            [(ngModel)]="userObj.name" required>
+            <input type="text" class="validate" id="name" name="name" (blur)="validateName()"
+            [(ngModel)]="userInputObj.name" required>
+            <blockquote *ngIf="!isNameValid">Ime nije validno. Ocekuju se samo slova</blockquote>
           </div>
           <div class="input-field">
             <label for="lastname">Prezime</label>
-            <input type="text" class="validate" id="lastname" name="lastname"
-            [(ngModel)]="userObj.lastname" required >
+            <input type="text" class="validate" id="lastname" name="lastname" (blur)="validateLastname()"
+            [(ngModel)]="userInputObj.lastname" required >
+            <blockquote *ngIf="!isLastnameValid" >Prezime nije validno. Ocekuju se samo slova.</blockquote>
           </div>
           <div class="input-field">
             <label for="address">Adresa</label>
-            <input type="text" class="validate" id="address" name="address"
-            [(ngModel)]="userObj.address" required>
+            <input type="text" class="validate" id="address" name="address" (blur)="validateAddress()"
+            [(ngModel)]="userInputObj.address" required>
+            <blockquote *ngIf="!isAddressValid" >Adresa nije validna</blockquote>
           </div>
           <div class="input-field">
             <label for="email">Email</label>
-            <input type="email" class="validate" id="email" name="email"
-            [(ngModel)]="userObj.email" required>
+            <input type="email" class="validate" id="email" name="email" (blur)="validateEmail()"
+            [(ngModel)]="userInputObj.email" required>
+            <blockquote *ngIf="!isEmailValid" >Email nije validan</blockquote>
           </div>
         </div>
         <div class="col s4">
@@ -38,31 +42,38 @@
         <div class="col s4">
           <div class="input-field">
             <label for="phoneNumber">Broj telefona</label>
-            <input type="text" id="phoneNumber" name="phoneNumber"
-            [(ngModel)]="userObj.number" required>
+            <input type="text" id="phoneNumber" name="phoneNumber" (blur)="validateNumber()"
+            [(ngModel)]="userInputObj.number" required>
+            <blockquote *ngIf="!isNumberValid" >Nije validano. Ocekuje se najmanje 6 cifara bez specijalnih znakova</blockquote>
           </div>
           <div class="input-field">
             <label for="jbmg">JMBG</label>
-            <input type="text" id="jmbg" name="jmbg" name="jmbg" 
-             [(ngModel)]="userObj.jmbg" required>
+            <input type="text" id="jmbg" name="jmbg" name="jmbg" (blur)="validateJMBG()"
+             [(ngModel)]="userInputObj.jmbg" required>
+             <blockquote *ngIf="!isJMBGValid" >Nije validno. Ocekuju se 13 brojeva</blockquote>
           </div>
           <div class="input-field">
               <label for="position">Pozicija</label>
-              <input type="text" id="position" name="position" 
-               [(ngModel)]="userObj.position" required>
+              <input type="text" id="position" name="position" (blur)="validatePosition()"
+               [(ngModel)]="userInputObj.position" required>
+               <blockquote *ngIf="!isPositionValid" >Nije validna pozicija</blockquote>
           </div>
-          <div class="">
-            <input type="checkbox" id="pos" name="pos" 
-             (click)="push('poz')" required>
-        </div>
           <div class="input-field">
             <label for="password">Sifra</label>
-            <input type="password" id="sifra" name="sifra"
-             [(ngModel)]="userObj.password" requred>
+            <input type="password" id="sifra" name="sifra" (blur)="validatePassword()"
+             [(ngModel)]="userInputObj.password" requred>
+             <blockquote *ngIf="!isPasswordValid">Nije validno. Ocekuje se najmanje 8 karaktera.</blockquote>
           </div>
         </div>
       </div>
       <button type="submit" class="waves-effect waves-light btn" [disabled]="!userForm.form.valid">Posalji profil</button>
     </form>
+    <div class="container" *ngIf="invalidInput" >
+      <h3>unosi nisu validni.</h3>
+      <p>Pogledajte ispod polja unosa gde je doslo do greske</p> 
+      <p>Takodje proverite da li ste izabrali profilnu sliku</p>
+    </div>
 </div>
+
+
 

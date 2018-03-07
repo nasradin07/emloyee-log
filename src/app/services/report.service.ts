@@ -11,17 +11,29 @@ import { NotificationService } from './notification.service';
 
 export class ReportService {
     reports: any;
+    report: any;
     private _sendReportsSubject = new Subject();
-    public reportFetchEvent$ = this._sendReportsSubject.asObservable();
+    public reportsFetchEvent$ = this._sendReportsSubject.asObservable();
+
+    private _sendReportSubject = new Subject();
+    public reportFetchEvent$ = this._sendReportSubject.asObservable();
+
     constructor(
         private _database: AngularFireDatabase,
         private _userService: UserService,
         private _notificationService: NotificationService
     ) {}
 
+    public saveReportForReportViewer(report) {
+        this.report = report;
+    }
+
+    public getReport() {
+        this._sendReportSubject.next(this.report);
+    }
+
     public getReports() {
         const userId = this._userService.getUserId();
-        console.log(userId);
         if (userId === false) {
             return;
         }
@@ -31,7 +43,11 @@ export class ReportService {
                     this.reports = reports;
                     this._sendReports(reports);
                 },
-                (err => console.log(err))
+                (err) => {
+                    const notification = 'Greska';
+                    const error = err.code;
+                    this._notificationService.displayError(notification, error);
+                }
             );
     }
 
@@ -46,6 +62,7 @@ export class ReportService {
         const userEmail = this._userService.getUserEmail();
         reportObj['date'] = date;
         reportObj['email'] = userEmail;
+        reportObj['name'] = this._userService.getUserName();
         const userId = this._userService.getUserId();
         const newReportRef = this._database.list(`reports/${userId}`);
         newReportRef.push(reportObj)

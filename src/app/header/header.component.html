@@ -2,15 +2,14 @@
   <div class="nav-wrapper col s12">
     <ul id="nav-mobile" class="left hide-on-med-and-down s" *ngIf="userLoggedIn" >
       <li ><a routerLink="/">Pocetna</a></li>
-      <li><a routerLink="/kreiranje-profila">Kreiranje profila</a></li>
+      <li><a routerLink="/kreiranje-profila" *ngIf="!userLoggedIn" >Kreiranje profila</a></li>
       <li ><a routerLink="/odmor">Slobodni dani</a></li>
       <li ><a routerLink="/izvestaj">Pisanje izvestaja</a></li>
       <li><a routerLink="/editovanje-profila">Izmeni profil</a></li>
-      <li> <a routerLink="/admin">Admin</a></li>
+      <li *ngIf="isUserAdmin" > <a routerLink="/admin">Admin</a></li>
     </ul>
     <ul class="right hide-on-med-and-down">
-      <li><a class="btn btn-floating"><i class="material-icons">alarm_on</i>
-      </a></li>
+      <li><app-notification></app-notification></li>
       <li><a class="waves-effect waves-light" routerLink="/login" *ngIf="!userLoggedIn" >Uloguj se</a></li>
       <li><a class="waves-effect waves-light" (click)="logout()" *ngIf="userLoggedIn" >Odjavi se</a></li>
     </ul>
