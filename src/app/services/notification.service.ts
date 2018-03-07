@@ -10,7 +10,7 @@ export class NotificationService {
     }
 
     public displayError(notification, error) {
-        Materialize.toast(`${notification}: ${error}`);
+        Materialize.toast(`${notification}: ${error}`, 3000);
     }
 
     public displayNotification(notification) {

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { RequestService } from '../../services/request.service';
 import { ValidateService } from '../../services/validate.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-vacation',
@@ -25,7 +26,8 @@ export class VacationComponent implements OnInit {
   months: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   constructor(
     private _requestService: RequestService,
-    private _validateService: ValidateService
+    private _validateService: ValidateService,
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit() {}
@@ -44,7 +46,8 @@ export class VacationComponent implements OnInit {
     if (param === 'vacation') {
       const totalVacationInDays = this._validateService.validateVacation(new Date(startDate), new Date(endDate));
       if (totalVacationInDays === false) {
-        console.log('Nije validno');
+        const notification = 'Odmor mora biti kraci od 21 dan';
+        this._notificationService.displayNotification(notification);
         return;
       }
       this._requestService.sendVacationRequest(startDate, endDate, totalVacationInDays);
