@@ -70,7 +70,11 @@ export class AdminComponent implements OnInit, OnDestroy {
       requestStatus: `Zahtev: ${request.data.request} - nije odobren`
     };
     const userId = request.metadata.userId;
-    this._adminService.diapproveRequest(userId, notification, requestKey);
+    if (request.metadata.type === 'Odmor' || request.metadata.type === 'Bolovanje') {
+      this._adminService.diapproveRequest(userId, notification, requestKey);
+    } else if (request.metadata.type === 'Registracija') {
+      this._adminService.disapproveRegistrationRequest(userId, requestKey);
+    }
   }
 
   public approveRequest(request) {

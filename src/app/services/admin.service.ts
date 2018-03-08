@@ -7,6 +7,7 @@ import { NotificationFirebaseService } from './notification-firebase.service';
 import { UserService } from './user.service';
 import { UpdateService } from './update.service';
 import { NotificationService } from './notification.service';
+import { RegistrationService } from './registration.service';
 
 @Injectable()
 
@@ -25,29 +26,39 @@ export class AdminService {
         private _requestService: RequestService,
         private _updateService: UpdateService,
         private _notificationFirebaseService: NotificationFirebaseService,
-        private _notificationService: NotificationService
+        private _notificationService: NotificationService,
+        private _registrationService: RegistrationService
     ) {}
 
     public approveVacationRequest(userId, notification, requestKey, daysOffRemaining) {
         this._requestService.deleteRequest(requestKey);
         this._notificationFirebaseService.sendNotification(userId, notification);
         this._updateService.updateUserDaysOff(userId, daysOffRemaining);
+        console.log(userId);
     }
 
     public approveSickDaysRequest(userId, notification, requestKey, newSickDays) {
         this._requestService.deleteRequest(requestKey);
         this._updateService.updateUserSickDays(userId, newSickDays);
         this._notificationFirebaseService.sendNotification(userId, notification);
+        console.log(userId);
     }
 
     public approveRegistrationRequest(userId, notification, requestKey) {
         this._requestService.deleteRequest(requestKey);
         this._notificationFirebaseService.sendNotification(userId, notification);
+        console.log(userId);
+    }
+
+    public disapproveRegistrationRequest(userId, requestKey) {
+        this._requestService.deleteRequest(requestKey);
+        this._registrationService.deleteUser(userId);
     }
 
     public diapproveRequest(userId, notification, requestKey) {
         this._requestService.deleteRequest(requestKey);
         this._notificationFirebaseService.sendNotification(userId, notification);
+        console.log(userId);
     }
 
     public getRequests() {

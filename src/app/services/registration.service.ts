@@ -7,6 +7,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { UserService } from './user.service';
 import { NotificationService } from './notification.service';
 import { RequestService } from './request.service';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 @Injectable()
 export class RegistrationService {
@@ -40,6 +41,18 @@ export class RegistrationService {
             const error = err.code;
             this._notificationService.displayError(notification, error);
           });
+      });
+  }
+
+  public deleteUser(userId) {
+    this._database.object(`users/${userId}`).remove()
+      .then(() => {
+        const notification = 'Korisnik je obrisan iz baze';
+        this._notificationService.displayNotification(notification);
+      }).catch(err => {
+        const notification = 'Doslo je do greske prilikom brisanja korisnika';
+        const error = err.code;
+        this._notificationService.displayError(notification, error);
       });
   }
 
