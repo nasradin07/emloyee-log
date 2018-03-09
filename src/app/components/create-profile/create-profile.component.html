@@ -64,6 +64,9 @@
              [(ngModel)]="userInputObj.password" requred>
              <blockquote *ngIf="!isPasswordValid">Nije validno. Ocekuje se najmanje 8 karaktera.</blockquote>
           </div>
+          <div>
+            <select class="" id=""></select>
+          </div>
         </div>
       </div>
       <button type="submit" class="waves-effect waves-light btn" [disabled]="!userForm.form.valid">Posalji profil</button>

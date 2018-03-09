@@ -34,20 +34,17 @@ export class AdminService {
         this._requestService.deleteRequest(requestKey);
         this._notificationFirebaseService.sendNotification(userId, notification);
         this._updateService.updateUserDaysOff(userId, daysOffRemaining);
-        console.log(userId);
     }
 
     public approveSickDaysRequest(userId, notification, requestKey, newSickDays) {
         this._requestService.deleteRequest(requestKey);
         this._updateService.updateUserSickDays(userId, newSickDays);
         this._notificationFirebaseService.sendNotification(userId, notification);
-        console.log(userId);
     }
 
     public approveRegistrationRequest(userId, notification, requestKey) {
         this._requestService.deleteRequest(requestKey);
         this._notificationFirebaseService.sendNotification(userId, notification);
-        console.log(userId);
     }
 
     public disapproveRegistrationRequest(userId, requestKey) {
@@ -58,7 +55,6 @@ export class AdminService {
     public diapproveRequest(userId, notification, requestKey) {
         this._requestService.deleteRequest(requestKey);
         this._notificationFirebaseService.sendNotification(userId, notification);
-        console.log(userId);
     }
 
     public getRequests() {

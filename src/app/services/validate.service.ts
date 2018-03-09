@@ -124,7 +124,7 @@ export class ValidateService {
   }
 
   public validatePhoneNumber(number) {
-      const numberRegex = /^[0-9]{6,}$/;
+      const numberRegex = /^[0-9]{6,12}$/;
       return numberRegex.test(number);
   }
 
