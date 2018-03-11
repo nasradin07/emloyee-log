@@ -29,5 +29,5 @@
       <textarea class="materialize-textarea" [(ngModel)]="reportObj.assessment" name="assessment" (blur)="validateAssessment()" ></textarea>
       <div *ngIf="!isAssessmentValid" class="error" > Ovo polje mora biti popunjeno </div>
     </div>
-    <button class="waves-effect waves-light btn" (click)="sendReport()" routerLink="" >Posalji izvestaj</button>
+    <button class="waves-effect waves-light btn" (click)="sendReport()" >Posalji izvestaj</button>
 </div>

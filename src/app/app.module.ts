@@ -24,6 +24,7 @@ import { AdminService } from './services/admin.service';
 import { NotificationService } from './services/notification.service';
 import { UpdateService } from './services/update.service';
 import { NotificationFirebaseService } from './services/notification-firebase.service';
+import { FilterService } from './services/filter.service';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -37,7 +38,9 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
 import { NotificationComponent } from './header/notification/notification.component';
-
+import { ReportsComponent } from './components/reports/reports.component';
+import { InstructionsComponent } from './components/home/instructions/instructions.component';
+import { RequestComponent } from './components/admin/request/request.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { NotificationComponent } from './header/notification/notification.compon
     LoginComponent,
     AdminComponent,
     ViewReportComponent,
-    NotificationComponent
+    NotificationComponent,
+    ReportsComponent,
+    InstructionsComponent,
+    RequestComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +78,8 @@ import { NotificationComponent } from './header/notification/notification.compon
     AdminService,
     NotificationService,
     UpdateService,
-    NotificationFirebaseService
+    NotificationFirebaseService,
+    FilterService
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ import { VacationComponent } from './components/vacation/vacation.component';
 import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 export const appRoutes: Routes = [
     {
@@ -41,6 +42,10 @@ export const appRoutes: Routes = [
     {
         path: 'vidi-izvestaj',
         component: ViewReportComponent
+    },
+    {
+        path: 'izvestaji',
+        component: ReportsComponent
     },
     {
         path: '**',

@@ -16,6 +16,7 @@ export class RequestService {
     ) {}
 
     public sendRequest(request) {
+        console.log(request);
         this._database.list('requests').push(request)
             .then(() => {
                 const notification = 'Uspesno ste poslali zahtev';

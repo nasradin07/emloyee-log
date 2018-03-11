@@ -33,7 +33,7 @@ export class VacationComponent implements OnInit {
   ngOnInit() {}
 
   sendRequest(param) {
-    const startDate = `${this.startDate.month}-${this.startDate.month}-${this.startDate.year}`;
+    const startDate = `${this.startDate.month}-${this.startDate.day}-${this.startDate.year}`;
     const endDate = `${this.endDate.month}-${this.endDate.day}-${this.endDate.year}`;
 
     const isInputValid = this._validateService.validateUserDateInput(startDate)

@@ -1,0 +1,10 @@
+h2 {
+    position: relative;
+    text-align: center;
+}
+.welcome-screen {
+    border-color: rgb(170, 169, 169);
+    border-width: 5px;  
+    border-style: outset;
+    padding: 5%;
+}

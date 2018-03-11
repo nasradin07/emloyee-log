@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AdminService } from '../../services/admin.service';
 import { NotificationService } from '../../services/notification.service';
 import { ReportService } from '../../services/report.service';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,12 +14,19 @@ import { ReportService } from '../../services/report.service';
 export class AdminComponent implements OnInit, OnDestroy {
   private _subscriptions: Subscription[] = [];
   requests;
-  reports;
+  _reports;
+  reportsForDisplay: any;
+  filteredReports: any = {};
+  projects: any = [];
+  employeeNames: any = [];
   constructor(
     private _adminService: AdminService,
     private _notificationService: NotificationService,
-    private _reportService: ReportService
+    private _reportService: ReportService,
+    private _filterService: FilterService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) { }
+
 
   ngOnInit() {
     this._subscribeToRequestFetchEvent();
@@ -44,7 +52,6 @@ export class AdminComponent implements OnInit, OnDestroy {
       this._adminService.requestsFetchEvent$.subscribe(
         requests => {
           this.requests = requests;
-          console.log(requests);
         },
         err => console.log(err)
       )
@@ -55,7 +62,11 @@ export class AdminComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this._adminService.reportsFetchEvent.subscribe(
         reports => {
-          this.reports = reports;
+          this._reports = reports;
+          this.filteredReports = this._filterService.filterByProjectAndEmployee(this._reports);
+          this.reportsForDisplay = this._reports;
+          Object.keys(this.filteredReports.byProject).forEach(projectName => this.projects.push(projectName));
+          Object.keys(this.filteredReports.byName).forEach( employeeName => this.employeeNames.push(employeeName));
         },
         err => console.log(err)
       )
@@ -63,40 +74,20 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
 
-  public disapproveRequest(request) {
-    const requestKey = request.metadata.requestKey;
-    const notification = {
-      date: request.data.dateOfRequest,
-      requestStatus: `Zahtev: ${request.data.request} - nije odobren`
-    };
-    const userId = request.metadata.userId;
-    if (request.metadata.type === 'Odmor' || request.metadata.type === 'Bolovanje') {
-      this._adminService.diapproveRequest(userId, notification, requestKey);
-    } else if (request.metadata.type === 'Registracija') {
-      this._adminService.disapproveRegistrationRequest(userId, requestKey);
-    }
-  }
-
-  public approveRequest(request) {
-    const requestKey = request.metadata.key;
-    const notification = {
-      date: request.data.dateOfRequest,
-      requestStatus: `Zahtev: ${request.data.request} - je odobren`
-    };
-    const userId = request.metadata.userId;
-    if (request.metadata.type === 'Odmor') {
-      const daysOffRemaining = request.metadata.daysOffRemaining;
-      this._adminService.approveVacationRequest(userId, notification, requestKey, daysOffRemaining);
-    } else if (request.metadata.type === 'Registracija') {
-      this._adminService.approveRegistrationRequest(userId, notification, requestKey);
-    } else if (request.metadata.type === 'Bolovanje') {
-      const newSickDays = request.metadata.newSickDays;
-       this._adminService.approveSickDaysRequest(userId, notification, requestKey, newSickDays);
-    }
-  }
-
   public openReport(report) {
     this._reportService.saveReportForReportViewer(report);
+  }
+
+  filterByDate(param) {
+    this.reportsForDisplay = this._filterService.filterByDate(param, this.reportsForDisplay);
+  }
+
+  filterByProject(projectName) {
+    this.reportsForDisplay = this.filteredReports.byProject[projectName];
+  }
+
+  filterByEmployee(employeeName) {
+    this.reportsForDisplay = this.filteredReports.byName[employeeName];
   }
 
   ngOnDestroy() {

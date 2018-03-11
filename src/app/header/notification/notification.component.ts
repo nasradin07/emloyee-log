@@ -14,7 +14,7 @@ declare const $: any;
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   private _subscriptions: Subscription[] = [];
-  notifications: any;
+  notifications: any = [];
   buttonClasses = {
     red: false,
     pulse: false
@@ -72,11 +72,18 @@ export class NotificationComponent implements OnInit, OnDestroy {
   public deleteNotification(notificationKey) {
     const userId = this._userService.getUserId();
     this._notificationFirebaseService.deleteNotification(userId, notificationKey);
+    this.removeNotificationFromComponent(notificationKey);
   }
 
   public toggleButtonClass(param) {
     this.buttonClasses.red = param;
     this.buttonClasses.pulse = param;
+  }
+
+  public removeNotificationFromComponent(notificationKey) {
+    if (this.notifications.length === 1) {
+      this.notifications = [];
+    }
   }
 
   ngOnDestroy() {

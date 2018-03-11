@@ -25,6 +25,7 @@ export class ValidateService {
 
     let totalVacationInDays = (Math.abs(vacationEndDate - vacationStartDate)) / ( 24 * 60 * 60 * 1000) + 1;
     // increase for weekends
+    console.log(totalVacationInDays);
     const vacationStartDay = vacationStartDate.getDay();
     const vacationEndDay = vacationEndDate.getDay();
 
@@ -76,7 +77,6 @@ export class ValidateService {
         totalSickdays -= 1;
       }
     });
-
     return totalSickdays;
   }
 
@@ -129,8 +129,17 @@ export class ValidateService {
   }
 
   public validateJmbg(jmbg) {
+      const m = 11 - ( (7 * (+jmbg[0] + (+jmbg[6])) + 6 * (+jmbg[1] + (+jmbg[7])) + 5 * (+jmbg[2] + (+jmbg[8]))
+      + 4 * (+jmbg[3] + (+jmbg[9])) + 3 * (+jmbg[4] + (+jmbg[10])) + 2 * (+jmbg[5] + (+jmbg[11]))) % 11 );
       const jmbgRegex = /^[0-9]{13}$/;
-      return jmbgRegex.test(jmbg);
+      const isOnlyNumbers = jmbgRegex.test(jmbg);
+      let isLastDigitCorrect;
+      if (m >= 1 && m <= 9  && m === +jmbg[12]) {
+        isLastDigitCorrect = true;
+      } else if (m === 11 || m === 10 && +jmbg === 0 ) {
+        isLastDigitCorrect = true;
+      }
+      return isLastDigitCorrect && isOnlyNumbers;
   }
 
   public validateEmail(email) {

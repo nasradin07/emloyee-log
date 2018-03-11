@@ -45,8 +45,6 @@ export class CreateReportComponent implements OnInit {
 
   public isUserReportObjValid() {
     return this._validateService.validateReportObj(this.reportObj);
-   // return this.isAssessmentValid && this.isCommunicationValid && this.isCurrentProjectValid
-    //  && this.isDislikeValid && this.isImproveValid && this.isLikeValid;
   }
 
   public validateCurrentProject() {

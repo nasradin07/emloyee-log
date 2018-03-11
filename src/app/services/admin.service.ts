@@ -16,7 +16,7 @@ export class AdminService {
     private _sendRequestsSubject = new Subject();
     public requestsFetchEvent$ = this._sendRequestsSubject.asObservable();
 
-    private _reports: any = [];
+    private _reports: Array<any> = [];
     private _sendReportsSubject = new Subject();
     public reportsFetchEvent = this._sendReportsSubject.asObservable();
 

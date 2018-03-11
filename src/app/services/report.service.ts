@@ -10,7 +10,7 @@ import { NotificationService } from './notification.service';
 @Injectable()
 
 export class ReportService {
-    reports: any;
+    reports: Array<any>;
     report: any;
     private _sendReportsSubject = new Subject();
     public reportsFetchEvent$ = this._sendReportsSubject.asObservable();
@@ -38,7 +38,7 @@ export class ReportService {
             return;
         }
         const reportRef = this._database.list(`reports/${userId}`);
-        this.reports =  reportRef.valueChanges()
+        reportRef.valueChanges()
             .subscribe( reports => {
                     this.reports = reports;
                     this._sendReports(reports);
