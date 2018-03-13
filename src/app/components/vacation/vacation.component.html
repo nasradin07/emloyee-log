@@ -8,15 +8,15 @@
         <label>Izaberite dan</label>
         <select class="browser-default" [(ngModel)]="startDate.day" >
           <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let day of days" [value]="day"> {{day}} </option>
+          <option *ngFor="let day of startDays" [value]="day"> {{day}} </option>
         </select>
       </div>
       <p class="col s1"></p>
       <div class="col s3">
         <label >Mesec</label>
-        <select class="browser-default" [(ngModel)]="startDate.month" >
-          <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let month of months" [value]="month"> {{month}} </option>
+        <select class="browser-default" [(ngModel)]="startDate.month"  (change)="updatePossibleDays('start')" >
+          <option value="" selected disabled>Choose your option</option>
+          <option *ngFor="let month of startMonths" [value]="month"> {{month}} </option>
         </select>
       </div>
       <p class="col s1"></p>
@@ -24,9 +24,7 @@
         <label>Godina</label>
         <select class="browser-default" [(ngModel)]="startDate.year" >
           <option value="" disabled selected>Choose your option</option>
-          <option [value]="2018"> 2018 </option>
-          <option [value]="2019"> 2019 </option>
-          <option [value]="2020"> 2020 </option>
+          <option [value]="startYear"> {{startYear}} </option>
         </select>    
       </div>
     </div>
@@ -40,24 +38,22 @@
         <label >Dan</label>
         <select class="browser-default" [(ngModel)]="endDate.day" >
           <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let day of days" [value]="day"> {{day}} </option>
+          <option *ngFor="let day of endDays" [value]="day"> {{day}} </option>
         </select>    </div>
       <p class="col s1"></p>
       <div class="col s3">
         <label >Mesec</label>
-        <select class="browser-default" [(ngModel)]="endDate.month" >
+        <select class="browser-default" [(ngModel)]="endDate.month"  (change)="updatePossibleDays('end')" >
           <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let month of months" [value]="month"> {{month}} </option>
+          <option *ngFor="let month of endMonths" [value]="month"> {{month}} </option>
         </select>    
       </div>
       <p class="col s1"></p>
       <div class="col s3">
         <label>Godina</label>
-        <select class="browser-default" [(ngModel)]="endDate.year" >
+        <select class="browser-default" [(ngModel)]="endDate.year"  (change)="updatePossibleMonths('end')" >
           <option value="" disabled selected>Choose your option</option>
-          <option [value]="2018"> 2018 </option>
-          <option [value]="2019"> 2019 </option>
-          <option [value]="2020"> 2020 </option>
+          <option *ngFor="let year of endYear" [value]="year"> {{year}} </option>
         </select> 
       </div>
     </div>
