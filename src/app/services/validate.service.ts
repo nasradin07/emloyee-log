@@ -23,9 +23,9 @@ export class ValidateService {
     const totalVacationAllowed = 21;
     const userDaysOff = this._userService.getUserDaysOff();
 
-    let totalVacationInDays = (Math.abs(vacationEndDate - vacationStartDate)) / ( 24 * 60 * 60 * 1000) + 1;
+    let totalVacationInDays = Math.round(Math.abs(vacationEndDate - vacationStartDate)) / ( 24 * 60 * 60 * 1000) + 1;
     // increase for weekends
-    console.log(totalVacationInDays);
+
     const vacationStartDay = vacationStartDate.getDay();
     const vacationEndDay = vacationEndDate.getDay();
 
@@ -55,7 +55,7 @@ export class ValidateService {
   }
 
   public getTotalSickDays(startDate, endDate) {
-    let totalSickdays = (Math.abs(endDate - startDate)) / ( 24 * 60 * 60 * 1000) + 1;
+    let totalSickdays = Math.round(Math.abs(endDate - startDate)) / ( 24 * 60 * 60 * 1000) + 1;
     // increase for weekends
     const startDay = startDate.getDay();
     const endDay = endDate.getDay();
