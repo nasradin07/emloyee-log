@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { RegistrationService } from '../../services/registration.service';
+import { RequestService } from '../../services/request.service';
 import { ValidateService } from '../../services/validate.service';
 
 @Component({
@@ -31,10 +31,9 @@ export class CreateProfileComponent implements OnInit {
     position: '',
     password: '',
   };
-  url: any = '../../../assets/img/emptyprofile.png';
-  file: File = null;
+
   constructor(
-    private _registrationService: RegistrationService,
+    private _requestService: RequestService,
     private _validateService: ValidateService
   ) { }
 
@@ -43,14 +42,14 @@ export class CreateProfileComponent implements OnInit {
 
   public registerUser() {
     const isUserRegisterInputValid = this.isUserRegisterInputValid(this.userInputObj);
-    if (isUserRegisterInputValid === false || this.file === null) {
+    if (isUserRegisterInputValid === false) {
       this.invalidInput = true;
       return;
     } else {
       this.invalidInput = false;
     }
     const userObj = this.createUserObj(this.userInputObj);
-    this._registrationService.registerUser(userObj, this.file);
+    this._requestService.sendRegistrationRequest(userObj);
   }
 
   public createUserObj(userInput) {
@@ -67,19 +66,6 @@ export class CreateProfileComponent implements OnInit {
     userObj['daysOff'] = 25;
     userObj['sickDays'] = 0;
     return userObj;
-  }
-
-  public getFile(event) {
-    const that = this;
-    if (event.target.files && event.target.files[0]) {
-      this.file = event.target.files[0];
-
-      const reader = new FileReader();
-      reader.onload = function(e: any) {
-        that.url = e.target.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
   }
 
   public validateName() {

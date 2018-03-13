@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AdminService } from '../../services/admin.service';
+import { AdminService } from './services/admin.service';
 import { NotificationService } from '../../services/notification.service';
 import { ReportService } from '../../services/report.service';
 import { FilterService } from '../../services/filter.service';
+
 
 @Component({
   selector: 'app-admin',

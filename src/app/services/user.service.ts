@@ -22,10 +22,6 @@ export class UserService {
         private _storage: AngularFireStorage
     ) {    }
 
-    public createUser(email, password) {
-        return this._auth.auth.createUserWithEmailAndPassword(email, password);
-    }
-
     public listenUserStateChange() {
         this._auth.auth.onAuthStateChanged( user => {
             if (user) {
@@ -84,6 +80,10 @@ export class UserService {
 
     public getUserPosition() {
         return this._userData.position;
+    }
+
+    public getUserPassword() {
+        return this._userData.password;
     }
 
     private _notifyOfUserStateChange(param) {

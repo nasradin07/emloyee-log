@@ -22,9 +22,8 @@ export class NotificationFirebaseService {
         this._database.object(`notifications/${userId}`).valueChanges()
             .subscribe(
                 notificationsObj => {
-                    console.log('Value changed');
                     if (notificationsObj === null) {
-                        this.notifyOfNotificationFetchEvent(false);
+                        this.notifyOfNotificationFetchEvent([]);
                         return;
                     }
                     const notifications = [];

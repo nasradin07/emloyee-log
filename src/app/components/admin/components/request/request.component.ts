@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { AdminService } from '../../../services/admin.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-request',
@@ -27,13 +27,13 @@ export class RequestComponent implements OnInit {
     if (request.metadata.type === 'Odmor' || request.metadata.type === 'Bolovanje') {
       this._adminService.diapproveRequest(userId, notification, requestKey);
     } else if (request.metadata.type === 'Registracija') {
-      this._adminService.disapproveRegistrationRequest(userId, requestKey);
+      this._adminService.disapproveRegistrationRequest(requestKey);
     }
     this.showRequest = false;
   }
 
   public approveRequest(request) {
-    const requestKey = request.metadata.key;
+    const requestKey = request.metadata.requestKey;
     const notification = {
       date: request.data.dateOfRequest,
       requestStatus: `Zahtev: ${request.data.request} - je odobren`
@@ -43,7 +43,8 @@ export class RequestComponent implements OnInit {
       const daysOffRemaining = request.metadata.daysOffRemaining;
       this._adminService.approveVacationRequest(userId, notification, requestKey, daysOffRemaining);
     } else if (request.metadata.type === 'Registracija') {
-      this._adminService.approveRegistrationRequest(userId, notification, requestKey);
+      const userObj = request.metadata.userObj;
+      this._adminService.approveRegistrationRequest(userObj, notification, requestKey);
     } else if (request.metadata.type === 'Bolovanje') {
       const newSickDays = request.metadata.newSickDays;
        this._adminService.approveSickDaysRequest(userId, notification, requestKey, newSickDays);

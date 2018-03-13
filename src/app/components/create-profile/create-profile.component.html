@@ -1,7 +1,7 @@
   <div class="row">
     <form class="col s12" (ngSubmit)="registerUser()" #userForm="ngForm" >
       <div class="row">
-        <div class="col s4">
+        <div class="col s6">
           <div class="input-filed">
             <label for="name">Ime: </label>
             <input type="text" class="validate" id="name" name="name" (blur)="validateName()"
@@ -27,19 +27,7 @@
             <blockquote *ngIf="!isEmailValid" >Email nije validan</blockquote>
           </div>
         </div>
-        <div class="col s4">
-            <img [src]="url">
-            <div class="file-field input-field">
-                <div class="btn">
-                  <span>File</span>
-                  <input type="file" (change)="getFile($event)">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" required>
-                </div>
-              </div>
-        </div>
-        <div class="col s4">
+        <div class="col s6">
           <div class="input-field">
             <label for="phoneNumber">Broj telefona</label>
             <input type="text" id="phoneNumber" name="phoneNumber" (blur)="validateNumber()"

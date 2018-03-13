@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 // FIREBASE
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -12,11 +13,11 @@ export class RequestService {
     constructor(
         private _database: AngularFireDatabase,
         private _notificationService: NotificationService,
-        private _userService: UserService
+        private _userService: UserService,
+        private _router: Router
     ) {}
 
     public sendRequest(request) {
-        console.log(request);
         this._database.list('requests').push(request)
             .then(() => {
                 const notification = 'Uspesno ste poslali zahtev';
@@ -24,16 +25,15 @@ export class RequestService {
             });
     }
 
-    public sendRegistrationRequest(userName, userLastname, userId, userEmail) {
+    public sendRegistrationRequest(userObj) {
         const data = {
             dateOfRequest: (new Date).toDateString(),
-            request: `Zahtev za registraciju od ${userName} ${userLastname}`,
+            request: `Zahtev za registraciju od ${userObj.name} ${userObj.lastname}`,
             status: 'Nije odobren',
-            username: `${userName} ${userLastname}`
+            username: `${userObj.name} ${userObj.lastname}`
         };
         const metadata = {
-            userId : userId,
-            userEmail: userEmail,
+            userObj: userObj,
             type: 'Registracija'
         };
         const request = {
@@ -42,6 +42,7 @@ export class RequestService {
         };
 
         this.sendRequest(request);
+        this._router.navigateByUrl('instrukcije');
     }
 
     public deleteRequest(requestKey) {

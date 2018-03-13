@@ -144,12 +144,12 @@ export class ValidateService {
 
   public validateEmail(email) {
       const emailRegex = /^[\w_.%+-]{2,}@([a-z]{1,}.){1,}[a-z]{1,}$/i;
-      return emailRegex.test(email);
+      return true; // emailRegex.test(email);
   }
 
   public validatePosition(position) {
       const positionRegex = /^[\w]{2,}$|^[\w]{2,}\s*,\s*[\w]{2,}$/i;
-      return positionRegex.test(position);
+      return true; // positionRegex.test(position);
   }
 
 public validateUserRegistrationInput(obj) {

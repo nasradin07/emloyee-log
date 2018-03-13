@@ -10,6 +10,10 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
+// MODULES
+import { AdminModule } from './components/admin/admin.module';
+
+
 // ROUTES
 import { appRoutes } from './app.routing';
 
@@ -20,7 +24,6 @@ import { LoginService } from './services/login.service';
 import { UserService } from './services/user.service';
 import { RequestService } from './services/request.service';
 import { ValidateService } from './services/validate.service';
-import { AdminService } from './services/admin.service';
 import { NotificationService } from './services/notification.service';
 import { UpdateService } from './services/update.service';
 import { NotificationFirebaseService } from './services/notification-firebase.service';
@@ -35,12 +38,10 @@ import { CreateReportComponent } from './components/create-report/create-report.
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdminComponent } from './components/admin/admin.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
 import { NotificationComponent } from './header/notification/notification.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { InstructionsComponent } from './components/home/instructions/instructions.component';
-import { RequestComponent } from './components/admin/request/request.component';
 
 @NgModule({
   declarations: [
@@ -52,12 +53,10 @@ import { RequestComponent } from './components/admin/request/request.component';
     EditProfileComponent,
     VacationComponent,
     LoginComponent,
-    AdminComponent,
     ViewReportComponent,
     NotificationComponent,
     ReportsComponent,
-    InstructionsComponent,
-    RequestComponent
+    InstructionsComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +64,7 @@ import { RequestComponent } from './components/admin/request/request.component';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    AdminModule,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(appRoutes)
   ],
@@ -75,7 +75,6 @@ import { RequestComponent } from './components/admin/request/request.component';
     UserService,
     RequestService,
     ValidateService,
-    AdminService,
     NotificationService,
     UpdateService,
     NotificationFirebaseService,

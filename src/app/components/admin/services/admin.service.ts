@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
-import { ReportService } from './report.service';
-import { RequestService } from './request.service';
-import { NotificationFirebaseService } from './notification-firebase.service';
-import { UserService } from './user.service';
-import { UpdateService } from './update.service';
-import { NotificationService } from './notification.service';
-import { RegistrationService } from './registration.service';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+import { ReportService } from '../../../services/report.service';
+import { RequestService } from '../../../services/request.service';
+import { NotificationFirebaseService } from '../../../services/notification-firebase.service';
+import { UserService } from '../../../services/user.service';
+import { UpdateService } from '../../../services/update.service';
+import { NotificationService } from '../../../services/notification.service';
+import { RegistrationService } from '../../../services/registration.service';
 
 @Injectable()
 
@@ -27,8 +29,10 @@ export class AdminService {
         private _updateService: UpdateService,
         private _notificationFirebaseService: NotificationFirebaseService,
         private _notificationService: NotificationService,
-        private _registrationService: RegistrationService
-    ) {}
+        private _registrationService: RegistrationService,
+        private _auth: AngularFireAuth
+    ) {
+    }
 
     public approveVacationRequest(userId, notification, requestKey, daysOffRemaining) {
         this._requestService.deleteRequest(requestKey);
@@ -42,14 +46,29 @@ export class AdminService {
         this._notificationFirebaseService.sendNotification(userId, notification);
     }
 
-    public approveRegistrationRequest(userId, notification, requestKey) {
-        this._requestService.deleteRequest(requestKey);
-        this._notificationFirebaseService.sendNotification(userId, notification);
+    public approveRegistrationRequest(userObj, notification, requestKey) {
+        const currentUserEmail = this._userService.getUserEmail();
+        const currentUserPassword = this._userService.getUserPassword();
+        this._auth.auth.createUserWithEmailAndPassword(userObj.email, userObj.password)
+            .then( (user) => {
+                console.log('New user:', user);
+                const userId = user.uid;
+                this._registrationService.registerUser(userId, userObj);
+                this._auth.auth.signOut()
+                    .then(() => {
+                        this._auth.auth.signInWithEmailAndPassword(currentUserEmail, currentUserPassword)
+                            .then(() => {
+                                console.log('Sending notifications');
+                                this._notificationFirebaseService.sendNotification(userId, notification);
+                            });
+                        });
+                this._requestService.deleteRequest(requestKey);
+            })
+            .catch(err => console.log(err));
     }
 
-    public disapproveRegistrationRequest(userId, requestKey) {
+    public disapproveRegistrationRequest(requestKey) {
         this._requestService.deleteRequest(requestKey);
-        this._registrationService.deleteUser(userId);
     }
 
     public diapproveRequest(userId, notification, requestKey) {

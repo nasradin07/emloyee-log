@@ -32,12 +32,10 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private _subscribeToNotificationsFetchEvent() {
     this._subscriptions.push(
       this._notificationFirebaseService.notificationsFetchEvent$.subscribe(
-        notification => {
-          if (notification === false) {
-            return;
-          }
-          this.notifications = notification;
-          this.toggleButtonClass(true);
+        notifications => {
+          this.notifications = notifications;
+          const param = this.notifications.length > 0 ? true : false;
+          this.toggleButtonClass(param);
         },
         err => console.log(err)
       )
