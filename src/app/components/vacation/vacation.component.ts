@@ -64,7 +64,7 @@ export class VacationComponent implements OnInit {
   }
 
   public updatePossibleMonths() {
-    this.initializePossibleMonths(this.endDate.year, 'end');
+    this.initializePossibleMonths(parseInt(this.endDate.year, 10), 'end');
   }
 
   public updatePossibleDays(param) {
@@ -74,11 +74,13 @@ export class VacationComponent implements OnInit {
     } else if ( param === 'end' ) {
       month = this.endDate.month;
     }
-    this.initializePossibleDays( month, param);
+    this.initializePossibleDays( parseInt(month, 10), param);
   }
 
   public initializeDates() {
     const now = new Date();
+    this.startDate.year = now.getFullYear();
+    this.endDate.year = now.getFullYear();
     this.initializeStartYear(now.getFullYear());
     this.initializeEndYear(now.getFullYear());
     this.initializePossibleMonths(this.startYear, 'start');
@@ -99,7 +101,7 @@ export class VacationComponent implements OnInit {
   public initializePossibleMonths(year, param) {
     const now = new Date();
     this.clearMonths(param);
-    if ( year === now.getFullYear()) {
+    if ( parseInt(year, 10) === now.getFullYear()) {
       const nowMonth = now.getMonth();
       this.loopPossibleMonths(nowMonth, param);
     } else {
@@ -119,28 +121,46 @@ export class VacationComponent implements OnInit {
 
   public initializePossibleDays(month, param) {
     this.clearDays(param);
+    const startCountingAt = this.getStartCountingAtDay(param, month);
     if ( month <= 7) {
-      if ( month === 1 ) {
-        this.loopFebruaryDays(param);
-        console.log('February');
+      if ( month === 2 ) {
+        this.loopFebruaryDays(param, startCountingAt);
       } else if ( month % 2 === 1 ) {
-          this.loopDaysTo31(param);
-          console.log('31 days');
+          this.loopDaysTo31(param, startCountingAt);
         } else if (month % 2 === 0) {
-            this.loopDaysTo30(param);
-            console.log('30 days');
+            this.loopDaysTo30(param, startCountingAt);
         }
     } else if ( month > 7) {
       if (month % 2 === 1) {
-        this.loopDaysTo30(param);
+        this.loopDaysTo30(param, startCountingAt);
       } else if (month % 2 === 0) {
-        this.loopDaysTo31(param);
+        this.loopDaysTo31(param, startCountingAt);
       }
     }
+
   }
 
-  loopDaysTo31(param) {
-    for (let day = 0; day < 32; day += 1) {
+  getStartCountingAtDay(param, month) {
+    let startCountingAt = 1;
+    const now = new Date();
+    if (param === 'start') {
+      const year = parseInt(this.startDate.year, 10);
+      if (year === now.getFullYear() && month === now.getMonth() + 1) {
+        startCountingAt = now.getDate();
+      }
+    } else if (param === 'end') {
+      const year = parseInt( this.endDate.year, 10);
+      if (year === now.getFullYear() && month === now.getMonth() + 1) {
+        startCountingAt = now.getDate();
+      }
+    }
+    console.log(startCountingAt);
+    return startCountingAt;
+  }
+
+  loopDaysTo31(param, startCountingAt) {
+    const now = new Date();
+    for (let day = startCountingAt; day < 32; day += 1) {
       if (param === 'start') {
         this.startDays.push(day);
       } else if (param === 'end') {
@@ -149,14 +169,14 @@ export class VacationComponent implements OnInit {
     }
   }
 
-  loopDaysTo30(param) {
-    for (let day = 0; day < 31; day += 1) {
+  loopDaysTo30(param, startCountingAt) {
+    for (let day = startCountingAt; day < 31; day += 1) {
       param === 'start' ? this.startDays.push(day) : this.endDays.push(day);
     }
   }
 
-  loopFebruaryDays(param) {
-    for (let day = 0; day < 29; day += 1) {
+  loopFebruaryDays(param, startCountingAt) {
+    for (let day = startCountingAt; day < 29; day += 1) {
       param === 'start' ? this.startDays.push(day) : this.endDays.push(day);
     }
     const now = new Date();
