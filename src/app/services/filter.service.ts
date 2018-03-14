@@ -19,25 +19,48 @@ export class FilterService {
         return reports;
     }
 
-    public filterByProjectAndEmployee(reports) {
-        const filteredReportsObj = {
-            byName: {},
-            byProject: {}
+    getProjectNames(reports) {
+        const projectNames = {};
+        reports.forEach(report => {
+            const projectName = report.currentProject;
+            if (projectNames[projectName] === undefined) {
+                projectNames[projectName] = true;
+            }
+        });
+        return Object.keys(projectNames);
+    }
+
+    public getProjectAndUserNames(reports) {
+        const projectAndUserNames = {
+            userName: {},
+            projectName: {}
         };
         reports.forEach(report => {
-            const currentProject = report.currentProject.toString();
-            if (filteredReportsObj.byProject[currentProject] === undefined) {
-                filteredReportsObj.byProject[currentProject] = [];
+            if (projectAndUserNames.userName[report.name] === undefined) {
+                projectAndUserNames.userName[report.name] = true;
             }
-            filteredReportsObj.byProject[currentProject].push(report);
-
-            const employee = report.name;
-            if (filteredReportsObj.byName[employee] === undefined) {
-                filteredReportsObj.byName[employee] = [];
+            if (projectAndUserNames.projectName[report.currentProject] === undefined) {
+                projectAndUserNames.projectName[report.currentProject] = true;
             }
-            filteredReportsObj.byName[employee].push(report);
         });
 
-        return filteredReportsObj;
+        return projectAndUserNames;
+    }
+
+    filter(reports, employeeFilter, projectFilter) {
+        return reports.filter(report => {
+            const employeeName = report.name.trim().toLowerCase();
+            const reportName = report.currentProject.trim().toLowerCase();
+            projectFilter !== null ? projectFilter = projectFilter.trim().toLowerCase() : projectFilter = null;
+            employeeFilter !== null ? employeeFilter = employeeFilter.trim().toLowerCase() : employeeFilter = null;
+            if (employeeFilter === null) {
+                return reportName === projectFilter;
+            } else if ( projectFilter === null) {
+                return report.name.toLowerCase() === employeeFilter;
+            } else {
+                return reportName === projectFilter &&
+                       employeeName === employeeFilter;
+            }
+        });
     }
 }

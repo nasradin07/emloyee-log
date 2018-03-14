@@ -1,6 +1,56 @@
 <div class="container">
   <div class="row">
-    <div class="col s4" *ngFor="let report of reports">
+    <div class="filter">
+      <strong>Filtriraj po</strong>
+      <ul class="collapsible" data-collapsible="accordation">
+        <li>
+          <div class="collapsible-header">
+            Datumu
+          </div>
+          <div class="collapsible-body">
+            <ul>
+              <li>
+                <input name="group11" type="radio" id="eldest-first"  (change)="filterByDate('eldest')" />
+                <label for="eldest-first">Stariji prvo</label>
+              </li>
+              <li>
+                <input name="group11" type="radio" id="youngest-first" (change)="filterByDate('youngest')" />
+                <label for="youngest-first">Mladji prvo</label>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            Projektu
+          </div>
+          <div class="collapsible-body">
+            <ul>
+              <li *ngFor="let project of projectNames" >
+                <input name="group12" type="radio" id="label-izvestaji-{{project}}" (change)="filterByProject(project)" >
+                <label for="label-izvestaji-{{project}}">{{project}}</label>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            Prikazi sve izvestaje
+          </div>
+          <div class="collapsible-body">
+            <ul>
+              <li>
+                <input name="group4" type="radio" id="label-all" (click)="showAllReports()">
+                <label for="label-all">Prikazi sve</label>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s4" *ngFor="let report of reportsForDisplay">
       <div class="card">
         <div class="card-content">
           <div class="card-title">

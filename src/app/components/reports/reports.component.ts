@@ -1,32 +1,43 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ReportService } from '../../services/report.service';
+import { FilterService } from '../../services/filter.service';
+
+declare const $: any;
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-export class ReportsComponent implements OnInit, OnDestroy {
+export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
   _subscriptions: Subscription[] = [];
-  reports: any;
+  _reports: any;
+  reportsForDisplay: any = [];
+  projectNames: any = [];
   constructor(
-    private _reportService: ReportService
+    private _reportService: ReportService,
+    private _filterService: FilterService
   ) { }
 
   ngOnInit() {
     this._subscribeToFetchReportsEvent();
     this.getReports();
-    console.log('Called on init');
+  }
+
+  ngAfterViewInit() {
+    $('.collapsible').collapsible();
   }
 
   private _subscribeToFetchReportsEvent() {
     this._subscriptions.push(
       this._reportService.reportsFetchEvent$.subscribe(
         reports => {
-          this.reports = reports;
-          this.reports.reverse();
+          this._reports = reports;
+          this._reports.reverse();
+          this.projectNames = this._filterService.getProjectNames(this._reports);
+          this.reportsForDisplay = this._reports;
         }
       )
     );
@@ -38,6 +49,14 @@ export class ReportsComponent implements OnInit, OnDestroy {
 
   public getReports() {
     this._reportService.getReports();
+  }
+
+  public filterByDate(param) {
+    this.reportsForDisplay = this._filterService.filterByDate(param, this._reports);
+  }
+
+  public filterByProject(projectName) {
+    this.reportsForDisplay = this._filterService.filter(this._reports, null, projectName);
   }
 
   ngOnDestroy() {
