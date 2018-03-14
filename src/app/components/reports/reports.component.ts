@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
+declare const $: any;
 import { ReportService } from '../../services/report.service';
 import { FilterService } from '../../services/filter.service';
-
-declare const $: any;
 
 @Component({
   selector: 'app-reports',
@@ -27,7 +26,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    $('.collapsible').collapsible();
+    jquery('.collapsible').collapsible();
   }
 
   private _subscribeToFetchReportsEvent() {

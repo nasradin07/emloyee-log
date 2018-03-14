@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
+declare const $: any;
 import { AdminService } from './services/admin.service';
 import { NotificationService } from '../../services/notification.service';
 import { ReportService } from '../../services/report.service';
 import { FilterService } from '../../services/filter.service';
-
-declare const $: any;
 
 @Component({
   selector: 'app-admin',
