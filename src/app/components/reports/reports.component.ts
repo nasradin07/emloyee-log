@@ -26,7 +26,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    jquery('.collapsible').collapsible();
+    $('.collapsible').collapsible();
   }
 
   private _subscribeToFetchReportsEvent() {
