@@ -51,20 +51,22 @@ export class AdminService {
         const currentUserPassword = this._userService.getUserPassword();
         this._auth.auth.createUserWithEmailAndPassword(userObj.email, userObj.password)
             .then( (user) => {
-                console.log('New user:', user);
                 const userId = user.uid;
                 this._registrationService.registerUser(userId, userObj);
                 this._auth.auth.signOut()
                     .then(() => {
                         this._auth.auth.signInWithEmailAndPassword(currentUserEmail, currentUserPassword)
                             .then(() => {
-                                console.log('Sending notifications');
                                 this._notificationFirebaseService.sendNotification(userId, notification);
                             });
                         });
                 this._requestService.deleteRequest(requestKey);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const userNotification = 'Doslo je do greske prilikom stvaranja korisnika.';
+                const error = err.code;
+                this._notificationService.displayError(userNotification, error);
+            });
     }
 
     public disapproveRegistrationRequest(requestKey) {

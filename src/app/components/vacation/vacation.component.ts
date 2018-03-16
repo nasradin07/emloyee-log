@@ -160,7 +160,6 @@ export class VacationComponent implements OnInit {
         startCountingAt = now.getDate();
       }
     }
-    console.log(startCountingAt);
     return startCountingAt;
   }
 

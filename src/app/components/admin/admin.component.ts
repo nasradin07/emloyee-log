@@ -60,7 +60,10 @@ export class AdminComponent implements OnInit, AfterViewInit , OnDestroy {
         requests => {
           this.requests = requests;
         },
-        err => console.log(err)
+        err => {
+          const notification = 'Doslo je do greske prilikom dovlacenja zahteva iz baze. Oni ne mogu biti prikazani.';
+          this._notificationService.displayNotification(notification);
+        }
       )
     );
   }
@@ -76,7 +79,10 @@ export class AdminComponent implements OnInit, AfterViewInit , OnDestroy {
           Object.keys(projectAndUserNames.userName).forEach( employeeName => this.employeeNames.push(employeeName));
           this._changeDetectorRef.detectChanges();
         },
-        err => console.log(err)
+        err => {
+          const notification = 'Doslo je do greske prilikom dovlacenja izvestaja iz baze. Izvestaji ne mogu biti prikazani';
+          this._notificationService.displayNotification(notification);
+        }
       )
     );
   }

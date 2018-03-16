@@ -24,7 +24,11 @@ export class UpdateService {
                 const updateObj = { password: newPassword};
                 this.updateUserProfile(updateObj);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const notification = 'Doslo je do greske prilikom promene lozinke';
+                const error = err.code;
+                this._notificationService.displayError(notification, error);
+            });
     }
 
     public updateUserProfile(updateObj) {
@@ -35,7 +39,11 @@ export class UpdateService {
                 const notification = 'Uspesno ste promenili svoj profil';
                 this._notificationService.displayNotification(notification);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const notification = 'Doslo je do greske prilikom promene vaseg profila.'
+                const error = err.code;
+                this._notificationService.displayError(notification, error);
+            });
     }
 
     public updateUserImage(file) {
@@ -46,7 +54,11 @@ export class UpdateService {
                 const notification = 'Slika je uspesno promenjena';
                 this._notificationService.displayNotification(notification);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const notification = 'Doslo je do greske prilikom promene profilne slike.';
+                const error = err.code;
+                this._notificationService.displayError(notification, error);
+            });
     }
 
     public updateUserDaysOff(userId, newDaysOff) {

@@ -140,18 +140,18 @@ export class ValidateService {
         isLastDigitCorrect = true;
       }
       const isFirstDigitValid = parseInt(jmbg[0] , 10) <= 3;
-      const isThirdDigitValid = parseInt(jmbg[0], 10) <= 1;
+      const isThirdDigitValid = parseInt(jmbg[2], 10) <= 1;
       return isFirstDigitValid && isThirdDigitValid && isLastDigitCorrect && isOnlyNumbers;
   }
 
   public validateEmail(email) {
       const emailRegex = /^[\w_.%+-]{2,}@([a-z]{1,}.){1,}[a-z]{1,}$/i;
-      return true; // emailRegex.test(email);
+      return emailRegex.test(email);
   }
 
   public validatePosition(position) {
       const positionRegex = /^[\w]{2,}$|^[\w]{2,}\s*,\s*[\w]{2,}$/i;
-      return true; // positionRegex.test(position);
+      return positionRegex.test(position);
   }
 
 public validateUserRegistrationInput(obj) {

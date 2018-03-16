@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { NotificationFirebaseService } from '../../services/notification-firebase.service';
 import { UserService } from '../../services/user.service';
+import { NotificationService } from '../../services/notification.service';
 
 declare const Materialize: any;
 declare const $: any;
@@ -21,7 +22,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
   };
   constructor(
     private _notificationFirebaseService: NotificationFirebaseService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -37,7 +39,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
           const param = this.notifications.length > 0 ? true : false;
           this.toggleButtonClass(param);
         },
-        err => console.log(err)
+        err => {
+          const notification = 'Doslo je do greske prilikom povlacenja notifikacija iz baze. Notifikacije ne mogu biti prikazane';
+          const error = err.code;
+          this._notificationService.displayError(notification, error);
+        }
       )
     );
   }

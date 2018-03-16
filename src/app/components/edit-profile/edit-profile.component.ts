@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../../services/user.service';
 import { UpdateService } from '../../services/update.service';
+import { NotificationService } from '../../services/notification.service';
+
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -20,7 +22,8 @@ export class EditProfileComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    private _updateService: UpdateService
+    private _updateService: UpdateService,
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -80,9 +83,11 @@ export class EditProfileComponent implements OnInit {
     this._userService.getUserImageUrl().subscribe(
       imageUrl => {
         this.imageUrl = imageUrl;
-        console.log(this.imageUrl, imageUrl);
       },
-      err => console.log(err)
+      err => {
+        const notification = 'Doslo je do greske. Vasa profilna slika ne moze biti prikazana';
+        this._notificationService.displayNotification(notification);
+      }
     );
     if (userObj === null) {
       this.userIsLoggedIn = false;
