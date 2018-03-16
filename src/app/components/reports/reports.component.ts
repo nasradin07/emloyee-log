@@ -27,6 +27,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this._subscribeToUserLoginEvent();
     this._subscribeToFetchReportsEvent();
+    this.getReports();
   }
 
   ngAfterViewInit() {

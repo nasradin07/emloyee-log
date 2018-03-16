@@ -33,10 +33,8 @@ export class ReportService {
     }
 
     public getReports() {
-        console.log('Called get report');
         const userId = this._userService.getUserId();
         if (userId === false) {
-            console.log('user id = false');
             return;
         }
         const reportRef = this._database.list(`reports/${userId}`);
