@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 declare const $: any;
 import { ReportService } from '../../services/report.service';
 import { FilterService } from '../../services/filter.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-reports',
@@ -15,14 +16,17 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
   _reports: any;
   reportsForDisplay: any = [];
   projectNames: any = [];
+  dateFilter: any;
+  projectFilter: any;
   constructor(
     private _reportService: ReportService,
-    private _filterService: FilterService
+    private _filterService: FilterService,
+    private _userService: UserService
   ) { }
 
   ngOnInit() {
+    this._subscribeToUserLoginEvent();
     this._subscribeToFetchReportsEvent();
-    this.getReports();
   }
 
   ngAfterViewInit() {
@@ -42,6 +46,31 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  private _subscribeToUserLoginEvent() {
+    this._subscriptions.push(
+      this._userService.userLoggedInEvent$.subscribe(
+        notification => {
+          if (notification === true) {
+            this.getReports();
+          }
+        }
+      )
+    );
+  }
+
+  public isCheckedDate(param) {
+    return this.dateFilter === param;
+  }
+
+  public isCheckedProject(projectName) {
+    return this.projectFilter === projectName;
+  }
+
+  public clearAllFilters() {
+    this.dateFilter = null;
+    this.projectFilter = null;
+  }
+
   public openReport(report) {
     this._reportService.saveReportForReportViewer(report);
   }
@@ -51,11 +80,18 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public filterByDate(param) {
-    this.reportsForDisplay = this._filterService.filterByDate(param, this._reports);
+    this.dateFilter = param;
+    this.reportsForDisplay = this._filterService.filterByDate(param, this.reportsForDisplay);
   }
 
   public filterByProject(projectName) {
+    this.projectFilter = projectName;
     this.reportsForDisplay = this._filterService.filter(this._reports, null, projectName);
+  }
+
+  public showAllReports() {
+    this.clearAllFilters();
+    this.reportsForDisplay = this._reports;
   }
 
   ngOnDestroy() {

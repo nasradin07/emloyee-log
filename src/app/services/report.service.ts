@@ -33,8 +33,10 @@ export class ReportService {
     }
 
     public getReports() {
+        console.log('Called get report');
         const userId = this._userService.getUserId();
         if (userId === false) {
+            console.log('user id = false');
             return;
         }
         const reportRef = this._database.list(`reports/${userId}`);
@@ -42,6 +44,7 @@ export class ReportService {
             .subscribe( reports => {
                     this.reports = reports;
                     this._sendReports(reports);
+                    console.log('Reports fetched and sent');
                 },
                 (err) => {
                     const notification = 'Greska';

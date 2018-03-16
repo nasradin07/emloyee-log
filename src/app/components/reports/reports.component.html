@@ -10,11 +10,11 @@
           <div class="collapsible-body">
             <ul>
               <li>
-                <input name="group11" type="radio" id="eldest-first"  (change)="filterByDate('eldest')" />
+                <input name="group11" type="radio" id="eldest-first" [checked]="isCheckedDate('eldest')"  (change)="filterByDate('eldest')" />
                 <label for="eldest-first">Stariji prvo</label>
               </li>
               <li>
-                <input name="group11" type="radio" id="youngest-first" (change)="filterByDate('youngest')" />
+                <input name="group11" type="radio" id="youngest-first" [checked]="isCheckedDate('youngest')" (change)="filterByDate('youngest')" />
                 <label for="youngest-first">Mladji prvo</label>
               </li>
             </ul>
@@ -27,26 +27,14 @@
           <div class="collapsible-body">
             <ul>
               <li *ngFor="let project of projectNames" >
-                <input name="group12" type="radio" id="label-izvestaji-{{project}}" (change)="filterByProject(project)" >
+                <input name="group12" type="radio" id="label-izvestaji-{{project}}" [checked]="isCheckedProject(project)" (change)="filterByProject(project)" >
                 <label for="label-izvestaji-{{project}}">{{project}}</label>
               </li>
             </ul>
           </div>
         </li>
-        <li>
-          <div class="collapsible-header">
-            Prikazi sve izvestaje
-          </div>
-          <div class="collapsible-body">
-            <ul>
-              <li>
-                <input name="group4" type="radio" id="label-all" (click)="showAllReports()">
-                <label for="label-all">Prikazi sve</label>
-              </li>
-            </ul>
-          </div>
-        </li>
       </ul>
+      <button class="waves-effect waves-light btn" (click)="showAllReports()" >Prikazi sve izvestaje</button>
     </div>
   </div>
   <div class="row">

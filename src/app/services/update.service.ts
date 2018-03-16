@@ -40,7 +40,7 @@ export class UpdateService {
                 this._notificationService.displayNotification(notification);
             })
             .catch(err => {
-                const notification = 'Doslo je do greske prilikom promene vaseg profila.'
+                const notification = 'Doslo je do greske prilikom promene vaseg profila.';
                 const error = err.code;
                 this._notificationService.displayError(notification, error);
             });
