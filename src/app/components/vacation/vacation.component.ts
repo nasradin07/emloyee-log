@@ -63,8 +63,14 @@ export class VacationComponent implements OnInit {
     }
   }
 
-  public updatePossibleMonths() {
-    this.initializePossibleMonths(parseInt(this.endDate.year, 10), 'end');
+  public updatePossibleMonths(param) {
+    if (param === 'end') {
+      this.initializePossibleMonths(parseInt(this.endDate.year, 10), 'end');
+      this.initializePossibleDays(parseInt(this.endMonths[0], 10), 'end');
+    } else if (param === 'start') {
+      this.initializePossibleMonths(parseInt(this.startDate.year, 10), 'start');
+      this.initializePossibleDays( parseInt(this.startMonths[0], 10), 'start' );
+    }
   }
 
   public updatePossibleDays(param) {

@@ -139,7 +139,9 @@ export class ValidateService {
       } else if (m === 11 || m === 10 && +jmbg === 0 ) {
         isLastDigitCorrect = true;
       }
-      return isLastDigitCorrect && isOnlyNumbers;
+      const isFirstDigitValid = parseInt(jmbg[0] , 10) <= 3;
+      const isThirdDigitValid = parseInt(jmbg[0], 10) <= 1;
+      return isFirstDigitValid && isThirdDigitValid && isLastDigitCorrect && isOnlyNumbers;
   }
 
   public validateEmail(email) {
