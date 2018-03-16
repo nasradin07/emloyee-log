@@ -4,3 +4,14 @@
     border-style: outset;
     border-radius: 15px;
 }
+
+.company-image {
+    height: 100vh;
+    background-image: url('../../../assets/img/2-min.jpg'); 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.image-wrapper {
+    opacity: 0.3;
+}

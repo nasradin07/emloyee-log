@@ -25,7 +25,6 @@ export class ViewReportComponent implements OnInit, OnDestroy {
   }
 
   private _subscribeToReportFetchEvent() {
-    console.log('Subscribing to report fetch event');
     this._subscriptions.push(
       this._reportService.reportFetchEvent$.subscribe(
         report => this.report = report

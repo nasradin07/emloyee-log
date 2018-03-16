@@ -19,6 +19,7 @@ export class AdminComponent implements OnInit, AfterViewInit , OnDestroy {
   reportsForDisplay: any;
   projects: any = [];
   employeeNames: any = [];
+  dateFilter: any  = null;
   employeeFilter: any = null;
   projectFilter: any = null;
   constructor(
@@ -85,32 +86,46 @@ export class AdminComponent implements OnInit, AfterViewInit , OnDestroy {
     this._reportService.saveReportForReportViewer(report);
   }
 
-  setProjectFilter(projectFilter) {
+  public isCheckedDate(param) {
+    return param === this.dateFilter;
+  }
+
+  public isCheckedProject(projectName) {
+    return projectName === this.projectFilter;
+  }
+
+  public isCheckedEmployee(employeeName) {
+    return employeeName === this.employeeFilter;
+  }
+
+  public setProjectFilter(projectFilter) {
     this.projectFilter = projectFilter;
     this.filter();
   }
 
-  setEmployeeFilter(employeeFilter) {
+  public setEmployeeFilter(employeeFilter) {
     this.employeeFilter = employeeFilter;
     this.filter();
   }
 
-  filterByDate(param) {
+  public filterByDate(param) {
+    this.dateFilter = param;
     this.reportsForDisplay = this._filterService.filterByDate(param, this.reportsForDisplay);
   }
 
-  filter() {
+  public filter() {
     this.reportsForDisplay = this._filterService.filter(this._reports, this.employeeFilter, this.projectFilter);
   }
 
-  showAllReports() {
+  public showAllReports() {
     this.reportsForDisplay = this._reports;
-    this.removeProjectAndEmployeeFilters();
+    this.removeAllFilters();
   }
 
-  removeProjectAndEmployeeFilters() {
+  public removeAllFilters() {
     this.employeeFilter = null;
     this.projectFilter = null;
+    this.dateFilter = null;
   }
   ngOnDestroy() {
     this._subscriptions.forEach( subscription => subscription.unsubscribe());
