@@ -1,67 +1,80 @@
-<div class="container">
-  <div>
-    <div class="row">
-      <blockquote class="col s4 offset-s4" >Pocetak</blockquote>
-    </div>
-    <div class="row">
-      <div class="col s3">
-        <label>Izaberite dan</label>
-        <select class="browser-default" [(ngModel)]="startDate.day" >
-          <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let day of startDays" [value]="day"> {{day}} </option>
-        </select>
-      </div>
-      <p class="col s1"></p>
-      <div class="col s3">
-        <label >Mesec</label>
-        <select class="browser-default" [(ngModel)]="startDate.month"  (change)="updatePossibleDays('start')" >
-          <option value="" selected disabled>Choose your option</option>
-          <option *ngFor="let month of startMonths" [value]="month"> {{month}} </option>
-        </select>
-      </div>
-      <p class="col s1"></p>
-      <div class="col s3">
-        <label>Godina</label>
-        <select class="browser-default" [(ngModel)]="startDate.year" >
-          <option value="" disabled selected>Choose your option</option>
-          <option [value]="startYear"> {{startYear}} </option>
-        </select>    
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="row">
-      <blockquote class="col s4 offset-s4">Kraj</blockquote>
-    </div>
-    <div class="row">
-      <div class="col s3">
-        <label >Dan</label>
-        <select class="browser-default" [(ngModel)]="endDate.day" >
-          <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let day of endDays" [value]="day"> {{day}} </option>
-        </select>    </div>
-      <p class="col s1"></p>
-      <div class="col s3">
-        <label >Mesec</label>
-        <select class="browser-default" [(ngModel)]="endDate.month"  (change)="updatePossibleDays('end')" >
-          <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let month of endMonths" [value]="month"> {{month}} </option>
-        </select>    
-      </div>
-      <p class="col s1"></p>
-      <div class="col s3">
-        <label>Godina</label>
-        <select class="browser-default" [(ngModel)]="endDate.year"  (change)="updatePossibleMonths('end')" >
-          <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let year of endYear" [value]="year"> {{year}} </option>
-        </select> 
-      </div>
-    </div>
-  </div>
+<div class="container page-wrapper">
   <div class="row">
-    <div class="col s9 offset-s3">
-      <button type="submit" class=" waves-effect waves-light btn" (click)="sendRequest('vacation')">Posalji odmor </button>
-      <button type="submit" class=" waves-effect waves-light btn" (click)="sendRequest('sickDays')" >Posalji bolovanje </button>
+      <h3 class="col s12 page-header">Izaberite datume</h3>
+    <div class="col s6">
+      <div class="custom-picker z-depth-4">
+        <div class="row">
+          <blockquote class="col s5 offset-s2" >Pocetak</blockquote>
+        </div>
+        <div class="row">
+          <div class="col s7 offset-s2">
+            <label>Izaberite dan</label>
+            <select class="browser-default" [(ngModel)]="startDate.day">
+              <option value="" disabled selected>Izaberite opciju</option>
+              <option *ngFor="let day of days" [value]="day"> {{day}} </option>
+            </select>
+          </div>
+          <div class="col s7 offset-s2">
+            <label >Mesec</label>
+            <select class="browser-default" [(ngModel)]="startDate.month">
+              <option value="" selected disabled>Izaberite opciju</option>
+              <option *ngFor="let month of months" [value]="month"> {{month}} </option>
+            </select>
+          </div>
+          <div class="col s7 offset-s2">
+            <label>Godina</label>
+            <select class="browser-default" [(ngModel)]="startDate.year" >
+              <option value="" disabled selected>Izaberite opciju</option>
+              <option *ngFor="let year of years" [value]="year"> {{year}} </option>
+            </select>    
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="col s6">
+      <div class="custom-picker z-depth-4">
+        <div class="row col s5 offset-s2">
+          <blockquote class="col s7">Kraj</blockquote>
+        </div>
+        <div class="row">
+          <div class="col s7 offset-s2">
+            <label >Dan</label>
+            <select class="browser-default" [(ngModel)]="endDate.day" >
+              <option value="" disabled selected>Izaberite opciju</option>
+              <option *ngFor="let day of days" [value]="day"> {{day}} </option>
+            </select>    </div>
+          <div class="col s7 offset-s2">
+            <label >Mesec</label>
+            <select class="browser-default" [(ngModel)]="endDate.month">
+              <option value="" disabled selected>Izaberite opciju</option>
+              <option *ngFor="let month of months" [value]="month"> {{month}} </option>
+            </select>    
+          </div>
+          <div class="col s7 offset-s2">
+            <label>Godina</label>
+            <select class="browser-default" [(ngModel)]="endDate.year">
+              <option value="" disabled selected>Izaberite opciju</option>
+              <option *ngFor="let year of years" [value]="year"> {{year}} </option>
+            </select> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="checkbox-container">
+    <div class="row">
+      <div class="col s3 offset-s7">
+        <button type="submit" class=" waves-effect waves-light btn" (click)="sendRequest('vacation')">Posalji</button>
+      </div>
+    </div>  
+    <div class="row">
+      <div class="col s3 offset-s7">
+        <input type="checkbox" id="sick-days" (click)="setRequest()">
+        <label for="sick-days">Zahtev za bolovanje</label>
+      </div>
+    </div>  
   </div>
 </div>
+
+

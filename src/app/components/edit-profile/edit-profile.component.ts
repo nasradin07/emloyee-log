@@ -85,8 +85,7 @@ export class EditProfileComponent implements OnInit {
         this.imageUrl = imageUrl;
       },
       err => {
-        const notification = 'Doslo je do greske. Vasa profilna slika ne moze biti prikazana';
-        this._notificationService.displayNotification(notification);
+        this.handleImageError(err);
       }
     );
     if (userObj === null) {
@@ -105,6 +104,15 @@ export class EditProfileComponent implements OnInit {
     this.email = userObj.email;
     this.number = userObj.number;
     this.password = userObj.password;
+  }
+
+  public handleImageError(error) {
+    let notification;
+    if(error.code.indexOf('object-not-found')) {
+      notification = 'Nemate sliku. Molimo da izaberete sliku.'
+    }
+    else notification = 'Doslo je do greske. Vasa profilna slika ne moze biti prikazana';
+    this._notificationService.displayNotification(notification);
   }
 
 }

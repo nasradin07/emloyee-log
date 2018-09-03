@@ -1,0 +1,21 @@
+.custom-picker {
+   border: 2px solid salmon;
+   margin-top: 3vh;
+}
+
+.page-header {
+   text-align: center;
+}
+
+.page-wrapper {
+   margin-top: 1vh;
+   border: 1px solid rgb(197, 195, 195);
+   border-top: none;
+   min-width: 80vw;
+   height: 100vh;
+   padding: 3%;
+}
+
+.checkbox-container {
+   color: red;
+}

@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this._login.login('milan@gmail.com', 'andLuis22');
+    
   }
 }

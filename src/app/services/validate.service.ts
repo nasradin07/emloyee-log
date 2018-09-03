@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { UserService } from './user.service';
 import { User } from '@firebase/auth-types';
+import { start } from 'repl';
 
 @Injectable()
 export class ValidateService {
@@ -20,6 +21,10 @@ export class ValidateService {
   ) { }
 
   public validateVacation(vacationStartDate, vacationEndDate) {
+    if(vacationEndDate - vacationStartDate < 1) {
+      return {status: false, result: 'Pocetak odmora mora biti raniji datum od kraja odmora'};
+    }
+
     const totalVacationAllowed = 21;
     const userDaysOff = this._userService.getUserDaysOff();
 
@@ -48,17 +53,20 @@ export class ValidateService {
     });
 
     if (totalVacationAllowed >= totalVacationInDays && totalVacationInDays <= userDaysOff) {
-      return totalVacationInDays;
+      return {status: true, result: totalVacationInDays};
     } else {
-      return false;
+      return {status: false, result: 'Odmor mora ne sme biti duzi od 21 dan'};
     }
   }
 
-  public getTotalSickDays(startDate, endDate) {
-    let totalSickdays = Math.round(Math.abs(endDate - startDate)) / ( 24 * 60 * 60 * 1000) + 1;
-    // increase for weekends
+  public validateSickDays(startDate, endDate) {
     const startDay = startDate.getDay();
     const endDay = endDate.getDay();
+    if(endDate - startDate < 1) {
+      return {status: false, result: 'Pocetak bolovanja mora biti raniji od kraja bolovanja'};
+    }
+    let totalSickdays = Math.round(Math.abs(endDate - startDate)) / ( 24 * 60 * 60 * 1000) + 1;
+    // increase for weekends
 
     if (endDay < startDay && totalSickdays % 7 !== 0) {
       totalSickdays -= 2;
@@ -77,7 +85,7 @@ export class ValidateService {
         totalSickdays -= 1;
       }
     });
-    return totalSickdays;
+    return {status: true, result: totalSickdays};
   }
 
   public validateUserReportInput(reportInput) {

@@ -1,4 +1,19 @@
 img {
-    height: 35vh;
-    width: 25vw;
+    margin-top: 10vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 40vh;
+}
+
+.page-wrapper {
+    margin-top: 2vh;
+    box-shadow: 2px 3px 2px 2px  gray; 
+    border-top: 1px solid gray;
+    padding: 1%;
+}
+
+.information-container {
+    border-right: 2px solid salmon;
 }

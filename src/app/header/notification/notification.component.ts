@@ -51,9 +51,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private _subscribeToUserLoginEvent() {
     this._subscriptions.push(
       this._userService.userLoggedInEvent$.subscribe(
-        param => {
-          if (param === true) {
+        userLoggedIn => {
+          if (userLoggedIn === true) {
             this.getNotifications();
+          } else {
+            this.removeNotifications();
           }
         }
       )

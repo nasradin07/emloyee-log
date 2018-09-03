@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container report-container z-depth-4">
     <div class="input-field">
       <label for="currentProject">Trenutni projekat</label>
       <textarea class="materialize-textarea" [(ngModel)]="reportObj.currentProject" name="currentProject" (blur)="validateCurrentProject()" ></textarea>
@@ -29,5 +29,11 @@
       <textarea class="materialize-textarea" [(ngModel)]="reportObj.assessment" name="assessment" (blur)="validateAssessment()" ></textarea>
       <div *ngIf="!isAssessmentValid" class="error" > Ovo polje mora biti popunjeno </div>
     </div>
-    <button class="waves-effect waves-light btn" (click)="sendReport()" >Posalji izvestaj</button>
+    <div class="row">
+      <div class="col s3 offset-s9">
+        <button class="waves-effect waves-light btn" (click)="sendReport()" >
+          Posalji izvestaj
+        </button>
+      </div>
+    </div>
 </div>

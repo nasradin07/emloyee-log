@@ -1,3 +1,30 @@
 .card {
     height: 30vh;
 }
+.page-wrapper {
+    width: 85vw;
+}
+.filters-container {
+    border-right: 1px solid salmon;
+    height: 100vh;
+    background-image: linear-gradient(to left, seashell, white);
+}
+
+.filters {
+    padding: 3%;
+    width: 100%;
+}
+
+.filters > h5 {
+    text-align: center;
+}
+
+.reports-container {
+    background-image: linear-gradient(to right, lightgray, whitesmoke);
+    height: 100vh;
+}
+
+.card:hover {
+    background-image: linear-gradient(to right, whitesmoke, salmon); 
+}
+

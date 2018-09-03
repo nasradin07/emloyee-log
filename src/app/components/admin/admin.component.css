@@ -1,4 +1,24 @@
 .filter {
-    position: relative;
-    bottom: 0px;
 }
+.right-side, .left-side{ 
+    margin-top: 1vh;
+    padding: 2%;
+}
+
+.requests-container {
+    margin-top: 1vh;
+}
+
+.wrapper {
+    width: 90%;
+    margin: auto;
+}
+
+.card:hover {
+    border-right: 0.5px solid salmon;
+ }
+ 
+ .card {
+    margin-top: 2vh;
+    margin-right: 0.25vw;
+ }

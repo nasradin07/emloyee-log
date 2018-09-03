@@ -1,58 +1,68 @@
-<div class="container">
+<div class="container page-wrapper">
   <div class="row">
-    <div class="filter">
-      <strong>Filtriraj po</strong>
-      <ul class="collapsible" data-collapsible="accordation">
-        <li>
-          <div class="collapsible-header">
-            Datumu
-          </div>
-          <div class="collapsible-body">
-            <ul>
-              <li>
-                <input name="group11" type="radio" id="eldest-first" [checked]="isCheckedDate('eldest')"  (change)="filterByDate('eldest')" />
-                <label for="eldest-first">Stariji prvo</label>
-              </li>
-              <li>
-                <input name="group11" type="radio" id="youngest-first" [checked]="isCheckedDate('youngest')" (change)="filterByDate('youngest')" />
-                <label for="youngest-first">Mladji prvo</label>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div class="collapsible-header">
-            Projektu
-          </div>
-          <div class="collapsible-body">
-            <ul>
-              <li *ngFor="let project of projectNames" >
-                <input name="group12" type="radio" id="label-izvestaji-{{project}}" [checked]="isCheckedProject(project)" (change)="filterByProject(project)" >
-                <label for="label-izvestaji-{{project}}">{{project}}</label>
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-      <button class="waves-effect waves-light btn" (click)="showAllReports()" >Prikazi sve izvestaje</button>
+
+    <div class="col s3 filters-container">
+      <div class="filters">
+        <h5>Filtriraj po</h5>
+        <ul class="collapsible" data-collapsible="accordation">
+          <li>
+            <div class="collapsible-header">
+              Datumu
+            </div>
+            <div class="collapsible-body">
+              <ul>
+                <li>
+                  <input name="group11" type="radio" id="eldest-first" [checked]="isCheckedDate('eldest')"  (change)="filterByDate('eldest')" />
+                  <label for="eldest-first">Stariji prvo</label>
+                </li>
+                <li>
+                  <input name="group11" type="radio" id="youngest-first" [checked]="isCheckedDate('youngest')" (change)="filterByDate('youngest')" />
+                  <label for="youngest-first">Mladji prvo</label>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              Projektu
+            </div>
+            <div class="collapsible-body">
+              <ul>
+                <li *ngFor="let project of projectNames" >
+                  <input name="group12" type="radio" id="label-izvestaji-{{project}}" [checked]="isCheckedProject(project)" (change)="filterByProject(project)" >
+                  <label for="label-izvestaji-{{project}}">{{project}}</label>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        <div class="checkbox-container">
+          <input type="checkbox" id="show-all" (click)="showAllReports()" >
+          <label for="show-all">Prikazi sve</label>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col s4" *ngFor="let report of reportsForDisplay">
-      <div class="card">
-        <div class="card-content">
-          <div class="card-title">
-            Izvestaj
-          </div>
-          <div>
-            <p>{{report.currentProject}}</p>
-            <p>{{report.date}}</p>
-          </div>
-          <div class="card-action">
-            <a class="waves-effect waves-ligh btn" routerLink="/vidi-izvestaj" (click)="openReport(report)">Pogledaj</a>
+  
+    <div class="col s9 reports-container" >
+      <div class="row">
+        <div class="col s4" *ngFor="let report of reportsForDisplay">
+          <div class="card z-depth-4">
+            <div class="card-content">
+              <div class="card-title">
+                Izvestaj
+              </div>
+              <div>
+                <p>Naziv projekta: {{report.currentProject.slice(0,40)}}</p>
+                <p>Datum: {{report.date}}</p>
+              </div>
+              <div class="card-action">
+                <a class="waves-effect waves-ligh btn btn-small" routerLink="/vidi-izvestaj" (click)="openReport(report)">Vidi</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>

@@ -1,75 +1,79 @@
-<div class="row" >
-  <div class="container col s6" >
-    <div class="row">
-      <div class="col s6" *ngFor="let request of requests">
-        <app-request  [request]="request"></app-request>
-      </div>
-    </div>
-  </div>
-  <div class="container col s6">
-    <div class="row">
-      <div class="filter">
-        <strong>Filtriraj po</strong>
-        <ul class="collapsible" data-collapsible="accordation">
-          <li>
-            <div class="collapsible-header">
-              Datumu
-            </div>
-            <div class="collapsible-body">
-              <ul>
-                <li>
-                  <input name="group1" type="radio" id="eldest-first" [checked]="isCheckedDate('eldest')" (change)="filterByDate('eldest')" />
-                  <label for="eldest-first">Stariji prvo</label>
-                </li>
-                <li>
-                  <input name="group1" type="radio" id="youngest-first" [checked]="isCheckedDate('youngest')" (change)="filterByDate('youngest')" />
-                  <label for="youngest-first">Mladji prvo</label>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header">
-              Projektu
-            </div>
-            <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let project of projects" >
-                  <input name="group2" type="radio" id="label-{{project}}" [checked]="isCheckedProject(project)" (change)="setProjectFilter(project)" >
-                  <label for="label-{{project}}">{{project}}</label>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header">
-              Zaposlenom
-            </div>
-            <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let employee of employeeNames" >
-                  <input name="group3" type="radio" id="label-{{employee}}" [checked]="isCheckedEmployee(employee)" (change)="setEmployeeFilter(employee)">
-                  <label for="label-{{employee}}">{{employee}}</label>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-        <button class="wave-effect waves-light btn" (click)="showAllReports()" >Prikazi sve izvestaje</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s6" *ngFor="let report of reportsForDisplay">
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">Izveštaj</span>
-            <p>Datum <span>{{report.date}}</span></p>
-            <p>Napisan od {{report.name}} </p>
-          </div>
-          <div class="card-action">
-            <a class="waves-effect waves-light btn btn-small" routerLink="/vidi-izvestaj" (click)="openReport(report)" >Pogledaj izvestaj</a>
-          </div>
+<div class="wrapper">
+  <div class="row" >
+    <div class="container col s6 left-side" >
+      <h5>Zahtevi</h5>
+      <div class="row">
+        <div class="col s6 container" *ngFor="let request of requests">
+          <app-request  [request]="request"></app-request>
         </div>
+      </div>
+    </div>
+    <div class="container col s6 right-side">
+      <div class="row">
+        <h5>Izvestaji</h5>
+        <div class="filter">
+          <strong>Filteri</strong>
+          <ul class="collapsible" data-collapsible="accordation">
+            <li>
+              <div class="collapsible-header">
+                Datumu
+              </div>
+              <div class="collapsible-body">
+                <ul>
+                  <li>
+                    <input name="group1" type="radio" id="eldest-first" [checked]="isCheckedDate('eldest')" (change)="filterByDate('eldest')" />
+                    <label for="eldest-first">Stariji prvo</label>
+                  </li>
+                  <li>
+                    <input name="group1" type="radio" id="youngest-first" [checked]="isCheckedDate('youngest')" (change)="filterByDate('youngest')" />
+                    <label for="youngest-first">Mladji prvo</label>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                Projektu
+              </div>
+              <div class="collapsible-body">
+                <ul>
+                  <li *ngFor="let project of projects" >
+                    <input name="group2" type="radio" id="label-{{project}}" [checked]="isCheckedProject(project)" (change)="setProjectFilter(project)" >
+                    <label for="label-{{project}}">{{project}}</label>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                Zaposlenom
+              </div>
+              <div class="collapsible-body">
+                <ul>
+                  <li *ngFor="let employee of employeeNames" >
+                    <input name="group3" type="radio" id="label-{{employee}}" [checked]="isCheckedEmployee(employee)" (change)="setEmployeeFilter(employee)">
+                    <label for="label-{{employee}}">{{employee}}</label>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+          <button class="wave-effect waves-light btn" (click)="showAllReports()" >Prikazi sve</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6 container" *ngFor="let report of reportsForDisplay">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Izveštaj</span>
+              <p>Datum <span>{{report.date}}</span></p>
+              <p>Napisan od {{report.name}} </p>
+            </div>
+            <div class="card-action">
+              <a class="waves-effect waves-light btn btn-small float-right" routerLink="/vidi-izvestaj" (click)="openReport(report)" >Pogledaj izvestaj</a>
+            </div>
+          </div>
+      </div>
     </div>
   </div>
 </div>

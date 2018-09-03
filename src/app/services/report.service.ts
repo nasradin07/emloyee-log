@@ -42,7 +42,6 @@ export class ReportService {
             .subscribe( reports => {
                     this.reports = reports;
                     this._sendReports(reports);
-                    console.log('Reports fetched and sent');
                 },
                 (err) => {
                     const notification = 'Greska';
@@ -61,7 +60,6 @@ export class ReportService {
     public sendReportToDatabase(reportObj) {
         const date = this.getTodaysDate();
         const userEmail = this._userService.getUserEmail();
-        reportObj = this.removeWhiteSpaces(reportObj);
         reportObj['date'] = date;
         reportObj['email'] = userEmail;
         reportObj['name'] = this._userService.getUserName();
@@ -85,12 +83,6 @@ export class ReportService {
     public getTodaysDate() {
         const date = new Date();
         return date.toLocaleDateString();
-    }
-
-    public removeWhiteSpaces(obj) {
-        Object.keys(obj).forEach( key => {
-            obj[key] = obj[key].trim();
-        });
     }
 
 }

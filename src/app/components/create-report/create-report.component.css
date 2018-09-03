@@ -2,3 +2,9 @@
     border-left: 5px solid red;
     background-color: bisque;
 }
+.report-container {
+    border: 2px solid indianred;
+    padding: 1%;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+}

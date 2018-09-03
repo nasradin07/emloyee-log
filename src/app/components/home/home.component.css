@@ -6,10 +6,10 @@
 }
 
 .company-image {
-    height: 100vh;
+    height: 80vh;
     background-image: url('../../../assets/img/2-min.jpg'); 
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 .image-wrapper {
