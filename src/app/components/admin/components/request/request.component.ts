@@ -43,7 +43,6 @@ export class RequestComponent implements OnInit {
       const daysOffRemaining = request.metadata.daysOffRemaining;
       this._adminService.approveVacationRequest(userId, notification, requestKey, daysOffRemaining);
     } else if (request.metadata.type === 'Registracija') {
-      console.log(request);
       const userObj = request.metadata.userObj;
       this._adminService.approveRegistrationRequest(userObj, notification, requestKey);
     } else if (request.metadata.type === 'Bolovanje') {

@@ -35,8 +35,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this._notificationFirebaseService.notificationsFetchEvent$.subscribe(
         notifications => {
-          console.log(notifications);
-          console.log(notifications);
           this.notifications = notifications;
           const isOn = this.notifications.length > 0 ? true : false;
           this.toggleButtonClass(isOn);
