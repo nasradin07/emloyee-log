@@ -9,9 +9,9 @@ host="174.138.10.209";
 
 
 logToTerminal () {
-  local message=$1;
-  local delay=$2;
-  local newLineBefore=$3;
+  message=$1;
+  delay=$2;
+  newLineBefore=$3;
 
   logNewlineAndResetColor $newLineBefore
   echo $message;
