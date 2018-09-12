@@ -11,6 +11,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 export class UserService {
     private _user: any = null;
     private _userData: any = null;
+    private subscription: any = null;
     private _userLoggedInSubject = new Subject();
     public userLoggedInEvent$ = this._userLoggedInSubject.asObservable();
 
@@ -29,6 +30,8 @@ export class UserService {
                 this._getUserData();
                 this._notifyOfUserStateChange(true);
             } else {
+                if (this.subscription)
+                    this.subscription.unsubscribe();
                 this._user = null;
                 this._userData = null;
                 this._notifyOfUserStateChange(false);
@@ -49,7 +52,7 @@ export class UserService {
 
     private _getUserData() {
         const userId = this.getUserId();
-        this._database.object(`users/${userId}`).valueChanges()
+        this.subscription = this._database.object(`users/${userId}`).valueChanges()
             .subscribe( userData => {
                 this._userData = userData;
                 this._notifyOfUserDataFetchEvent(true);
