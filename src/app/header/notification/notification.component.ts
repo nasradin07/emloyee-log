@@ -35,9 +35,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this._notificationFirebaseService.notificationsFetchEvent$.subscribe(
         notifications => {
+          console.log(notifications);
+          console.log(notifications);
           this.notifications = notifications;
-          const param = this.notifications.length > 0 ? true : false;
-          this.toggleButtonClass(param);
+          const isOn = this.notifications.length > 0 ? true : false;
+          this.toggleButtonClass(isOn);
         },
         err => {
           const notification = 'Doslo je do greske prilikom povlacenja notifikacija iz baze. Notifikacije ne mogu biti prikazane';
@@ -56,6 +58,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
             this.getNotifications();
           } else {
             this.removeNotifications();
+            this.toggleButtonClass(false);
           }
         }
       )
@@ -81,14 +84,17 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.removeNotificationFromComponent(notificationKey);
   }
 
-  public toggleButtonClass(param) {
-    this.buttonClasses.red = param;
-    this.buttonClasses.pulse = param;
+  public toggleButtonClass(isOn) {
+    this.buttonClasses.red = isOn;
+    this.buttonClasses.pulse = isOn;
   }
 
   public removeNotificationFromComponent(notificationKey) {
     if (this.notifications.length === 1) {
       this.notifications = [];
+    } else {
+      const index = this.notifications.findIndex(notification => notification.notificationKey === notificationKey);
+      this.notifications.splice(index,1);
     }
   }
 

@@ -8,7 +8,7 @@ import { NotificationService } from './notification.service';
 @Injectable()
 
 export class NotificationFirebaseService {
-    notifications: any;
+    public notifications: any;
 
     private _sendNotificationsSubject = new Subject();
     public notificationsFetchEvent$ = this._sendNotificationsSubject.asObservable();
